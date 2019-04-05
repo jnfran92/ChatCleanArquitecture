@@ -13,5 +13,5 @@ import io.reactivex.Observable;
 
 public interface PostDataStore {
     Observable<List<PostEntity>> postEntityList();
-    Observable<PostEntity> postEntityDetails();
+    Observable<PostEntity> postEntityDetails(int id);
 }

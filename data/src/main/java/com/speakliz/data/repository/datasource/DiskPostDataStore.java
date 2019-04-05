@@ -1,6 +1,7 @@
 package com.speakliz.data.repository.datasource;
 
 import com.speakliz.data.entity.PostEntity;
+import com.speakliz.data.utils.local.LocalApi;
 
 import java.util.List;
 
@@ -12,15 +13,19 @@ import io.reactivex.Observable;
 
 public class DiskPostDataStore implements PostDataStore {
 
+    private final LocalApi localApi;
 
-
-    @Override
-    public Observable<List<PostEntity>> postEntityList() {
-        return null;
+    public DiskPostDataStore(LocalApi localApi) {
+        this.localApi = localApi;
     }
 
     @Override
-    public Observable<PostEntity> postEntityDetails() {
-        return null;
+    public Observable<List<PostEntity>> postEntityList() {
+        return this.localApi.postEntityList();
+    }
+
+    @Override
+    public Observable<PostEntity> postEntityDetails(int id) {
+        return this.localApi.postEntityById(id);
     }
 }

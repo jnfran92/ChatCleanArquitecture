@@ -17,7 +17,7 @@ public class CloudPostDataStore implements PostDataStore {
     }
 
     @Override
-    public Observable<PostEntity> postEntityDetails() {
+    public Observable<PostEntity> postEntityDetails(int id) {
         return null;
     }
 }

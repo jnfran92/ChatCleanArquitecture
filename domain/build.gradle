@@ -1,7 +1,14 @@
 apply plugin: 'java-library'
 
+def rxJavaVersion = "2.0.2"
+def rxAndroidVersion = "2.0.1"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+
 }
 
 sourceCompatibility = "7"

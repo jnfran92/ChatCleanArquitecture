@@ -7,8 +7,8 @@ public class PostEntity {
     @SerializedName("userId")
     int userId;
 
-    @SerializedName("id")
-    int id;
+    @SerializedName("postId")
+    int postId;
 
     @SerializedName("title")
     String title;
@@ -23,8 +23,8 @@ public class PostEntity {
         return userId;
     }
 
-    public int getId() {
-        return id;
+    public int getPostId() {
+        return postId;
     }
 
     public String getTitle() {
@@ -39,8 +39,8 @@ public class PostEntity {
         this.userId = userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public void setTitle(String title) {
