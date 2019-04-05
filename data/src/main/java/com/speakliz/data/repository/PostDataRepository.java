@@ -1,4 +1,4 @@
 package com.speakliz.data.repository;
 
-public class Re {
+public class PostDataRepository {
 }

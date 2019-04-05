@@ -24,10 +24,19 @@ android {
 
 }
 
+
+def rxJavaVersion = "2.0.2"
+def rxAndroidVersion = "2.0.1"
+def gsonVersion = "2.8.5"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
+
+    implementation "com.google.code.gson:gson:${gsonVersion}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
