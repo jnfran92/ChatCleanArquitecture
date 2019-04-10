@@ -15,7 +15,7 @@ public class DiskPostDataStore implements PostDataStore {
 
     private final LocalApi localApi;
 
-    public DiskPostDataStore(LocalApi localApi) {
+    DiskPostDataStore(LocalApi localApi) {
         this.localApi = localApi;
     }
 

@@ -22,7 +22,8 @@ public class PostDataRepository implements PostRepository {
 
     private static PostDataRepository instance;
 
-    private PostDataRepository(PostDataStoreFactory postDataStoreFactory, PostEntityDataMapper postEntityDataMapper) {
+    private PostDataRepository(PostDataStoreFactory postDataStoreFactory,
+                               PostEntityDataMapper postEntityDataMapper) {
         this.postDataStoreFactory = postDataStoreFactory;
         this.postEntityDataMapper = postEntityDataMapper;
     }

@@ -1,33 +1,42 @@
 package com.speakliz.data.repository;
 
+import com.speakliz.data.entity.mapper.PostEntityDataMapper;
+import com.speakliz.data.repository.datasource.PostDataStore;
+import com.speakliz.data.repository.datasource.PostDataStoreFactory;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PostDataRepositoryTest {
 
+    private PostDataRepository postDataRepository;
+
+    @Mock
+    private PostDataStoreFactory mockPostDataStoreFactory;
+
+    @Mock
+    private PostEntityDataMapper mockPostEntityDataMapper;
+
+    @Mock
+    private PostDataStore mockPostDataStore;
+
     @Before
-    public void setUp() throws Exception {
-    }
+    public void setUp() {
+        postDataRepository = postDataRepository.getInstance(mockPostDataStoreFactory,
+                mockPostEntityDataMapper);
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void getInstance() {
+        given(mockPostDataStoreFactory.createDiskDataStore()).willReturn(mockPostDataStore);
     }
 
     @Test
-    public void posts() {
-    }
+    public void testGetPostsHappyCase(){
 
-    @Test
-    public void post() {
     }
 }
