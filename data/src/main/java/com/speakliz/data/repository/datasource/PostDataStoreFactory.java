@@ -12,14 +12,14 @@ import com.speakliz.data.utils.local.LocalApiImpl;
 //Singleton
 public class PostDataStoreFactory {
 
-    private PostDataStoreFactory instance;
+    private static PostDataStoreFactory instance;
 
     private PostDataStoreFactory() {
     }
 
     public PostDataStoreFactory getInstance(){
         if(instance != null) {
-            this.instance = new PostDataStoreFactory();
+            instance = new PostDataStoreFactory();
         }
         return instance;
     }
