@@ -43,7 +43,7 @@ public class PostEntityDataMapper {
         Post post = null;
 
         if(postEntity != null){
-            post = new Post(postEntity.getUserId());
+            post = new Post(postEntity.getPostId());
             post.setUserId(postEntity.getUserId());
             post.setBody(postEntity.getBody());
             post.setTitle(postEntity.getTitle());

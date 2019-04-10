@@ -16,5 +16,5 @@ public interface LocalApi {
      * @return Observable
      */
     Observable<List<PostEntity>> postEntityList();
-    Observable<PostEntity> postEntityById(int id);
+    Observable<PostEntity> postEntityById(int postId);
 }

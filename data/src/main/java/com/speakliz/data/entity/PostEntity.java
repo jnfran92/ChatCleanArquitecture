@@ -2,19 +2,23 @@ package com.speakliz.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Object created to test Json Request:
+ * It is related to: https://jsonplaceholder.typicode.com/posts
+ */
 public class PostEntity {
 
-    @SerializedName("userId")
-    int userId;
-
     @SerializedName("postId")
-    int postId;
+    private int postId;
+
+    @SerializedName("userId")
+    private int userId;
 
     @SerializedName("title")
-    String title;
+    private String title;
 
     @SerializedName("body")
-    String body;
+    private String body;
 
     public PostEntity() {
     }

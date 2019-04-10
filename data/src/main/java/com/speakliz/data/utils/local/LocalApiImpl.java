@@ -8,12 +8,17 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+/**
+ * Implementation of {@link LocalApi} data is created locally in memory
+ */
 public class LocalApiImpl implements LocalApi{
 
     private List<PostEntity> entityList;
 
+    /**
+     * Data is created in constructor
+     */
     public LocalApiImpl() {
-
         entityList=  new ArrayList<>();
         for (int i=0; i<10; i++){
             PostEntity postEntity = new PostEntity();
@@ -31,9 +36,9 @@ public class LocalApiImpl implements LocalApi{
     }
 
     @Override
-    public Observable<PostEntity> postEntityById(int id) {
+    public Observable<PostEntity> postEntityById(int postId) {
         return Observable.create(emitter -> {
-            emitter.onNext(entityList.get(id));
+            emitter.onNext(entityList.get(postId));
             emitter.onComplete();
         });
     }
