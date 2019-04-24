@@ -22,7 +22,7 @@ public class ApiConnectionTest {
     @Test
     public void testConnection(){
         String response = apiConnection.requestSyncCall();
-        System.out.println(response);
+//        System.out.println(response);
 
         assertNotNull(response);
     }
