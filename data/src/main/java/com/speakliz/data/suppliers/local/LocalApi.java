@@ -1,4 +1,4 @@
-package com.speakliz.data.utils.local;
+package com.speakliz.data.suppliers.local;
 
 import io.reactivex.Observable;
 

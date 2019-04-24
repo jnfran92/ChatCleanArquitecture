@@ -1,7 +1,7 @@
 package com.speakliz.data.repository.datasource;
 
 import com.speakliz.data.entity.PostEntity;
-import com.speakliz.data.utils.local.LocalApi;
+import com.speakliz.data.suppliers.local.LocalApi;
 
 import java.util.List;
 

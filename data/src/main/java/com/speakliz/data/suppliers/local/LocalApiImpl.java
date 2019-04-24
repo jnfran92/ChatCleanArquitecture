@@ -1,4 +1,4 @@
-package com.speakliz.data.utils.local;
+package com.speakliz.data.suppliers.local;
 
 
 import com.speakliz.data.entity.PostEntity;

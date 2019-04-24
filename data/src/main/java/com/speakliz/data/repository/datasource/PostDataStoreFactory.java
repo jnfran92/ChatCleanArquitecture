@@ -1,8 +1,8 @@
 package com.speakliz.data.repository.datasource;
 
 import com.speakliz.data.entity.PostEntity;
-import com.speakliz.data.utils.local.LocalApi;
-import com.speakliz.data.utils.local.LocalApiImpl;
+import com.speakliz.data.suppliers.local.LocalApi;
+import com.speakliz.data.suppliers.local.LocalApiImpl;
 
 /**
  * Factory creates a {@link PostDataStore} implementation according needs
