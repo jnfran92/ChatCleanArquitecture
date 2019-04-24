@@ -6,18 +6,19 @@ import com.speakliz.data.utils.local.LocalApiImpl;
 
 /**
  * Factory creates a {@link PostDataStore} implementation according needs
- * to get {@link PostEntity} SINGLETON
+ * to get {@link PostEntity}
+ * Attention: SINGLETON
  */
 
-//Singleton
 public class PostDataStoreFactory {
 
     private static PostDataStoreFactory instance;
 
+    // Here we need the context of the app!
     private PostDataStoreFactory() {
     }
 
-    public PostDataStoreFactory getInstance(){
+    public static PostDataStoreFactory getInstance(){
         if(instance != null) {
             instance = new PostDataStoreFactory();
         }

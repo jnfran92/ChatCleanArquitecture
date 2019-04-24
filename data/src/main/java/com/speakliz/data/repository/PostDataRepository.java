@@ -7,7 +7,6 @@ import com.speakliz.domain.model.Post;
 import com.speakliz.domain.repository.PostRepository;
 
 import java.util.List;
-import java.util.logging.Handler;
 
 import io.reactivex.Observable;
 
@@ -28,8 +27,8 @@ public class PostDataRepository implements PostRepository {
         this.postEntityDataMapper = postEntityDataMapper;
     }
 
-    public PostDataRepository getInstance(PostDataStoreFactory postDataStoreFactory,
-                                          PostEntityDataMapper postEntityDataMapper){
+    public static PostDataRepository getInstance(PostDataStoreFactory postDataStoreFactory,
+                                   PostEntityDataMapper postEntityDataMapper){
         if(instance == null){
             instance = new PostDataRepository(postDataStoreFactory,
                     postEntityDataMapper);

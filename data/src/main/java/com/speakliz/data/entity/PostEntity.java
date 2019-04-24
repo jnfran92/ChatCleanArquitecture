@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Object created to test Json Request:
- * It is related to: https://jsonplaceholder.typicode.com/posts
+ * It is supposed to consume the public REST API: https://jsonplaceholder.typicode.com/posts
  */
 public class PostEntity {
 

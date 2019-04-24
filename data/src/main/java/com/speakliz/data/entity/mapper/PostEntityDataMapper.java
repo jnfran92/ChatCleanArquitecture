@@ -25,7 +25,7 @@ public class PostEntityDataMapper {
      * Singleton
      * @return {@link PostEntityDataMapper}
      */
-    public PostEntityDataMapper getInstance(){
+    public static PostEntityDataMapper getInstance(){
         if(instance == null){
             instance = new PostEntityDataMapper();
         }
