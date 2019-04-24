@@ -44,6 +44,8 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
     implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
 
+    implementation("com.squareup.okhttp3:okhttp:3.14.1")
+
     testImplementation 'org.mockito:mockito-core:2.7.22'
 
     testImplementation 'junit:junit:4.12'
