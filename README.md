@@ -1,2 +1,2 @@
 # ChatCleanArquitecture
-CLEAN Architecture applied in Android to get chat and user models working(similar to SpeakLiz Pro Model). Using: Dagger2 and Butterknife.
+CLEAN Architecture applied in Android to get chat and user models working. Using: Dagger2 and Butterknife.
