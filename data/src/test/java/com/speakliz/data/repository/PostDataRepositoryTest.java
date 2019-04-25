@@ -49,7 +49,7 @@ public class PostDataRepositoryTest {
         postDataRepository = PostDataRepository.getInstance(postDataStoreFactory,
                 postEntityDataMapper);
 
-        Observable<List<Post>> postsTest = postDataRepository.posts();
+//        Observable<List<Post>> postsTest = postDataRepository.posts();
 
     }
 

@@ -1,5 +1,7 @@
 package com.speakliz.data.repository.datasource;
 
+import android.content.Context;
+
 import com.speakliz.data.entity.PostEntity;
 import com.speakliz.data.suppliers.local.LocalApi;
 import com.speakliz.data.suppliers.local.LocalApiImpl;
@@ -13,14 +15,16 @@ import com.speakliz.data.suppliers.local.LocalApiImpl;
 public class PostDataStoreFactory {
 
     private static PostDataStoreFactory instance;
+    private final Context context;
 
-    // Here we need the context of the app!
-    private PostDataStoreFactory() {
+    // It needs Cache
+    public PostDataStoreFactory(Context context) {
+        this.context = context;
     }
 
-    public static PostDataStoreFactory getInstance(){
+    public static PostDataStoreFactory getInstance(Context context){
         if(instance != null) {
-            instance = new PostDataStoreFactory();
+            instance = new PostDataStoreFactory(context);
         }
         return instance;
     }

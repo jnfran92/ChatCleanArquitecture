@@ -22,8 +22,6 @@ public class ApiConnectionTest {
     @Test
     public void testGetResponseNotNull(){
         String response = apiConnection.requestSyncCall();
-//        System.out.println(response);
-
         assertNotNull(response);
     }
 }
