@@ -22,7 +22,7 @@ public interface RestApi {
     String API_URL_GET_POST_LIST = API_BASE_URL + "posts";
 
     /**
-     * API URL fro getting Post details: {@link PostEntity}
+     * API URL for getting Post details: {@link PostEntity}
      * Concatenate the "postId" in the String
      */
     String API_URL_GET_POST_DETAILS = API_URL_GET_POST_LIST + "/";

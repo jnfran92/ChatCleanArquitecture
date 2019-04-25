@@ -20,7 +20,7 @@ public class ApiConnectionTest {
     }
 
     @Test
-    public void testConnection(){
+    public void testGetResponseNotNull(){
         String response = apiConnection.requestSyncCall();
 //        System.out.println(response);
 
