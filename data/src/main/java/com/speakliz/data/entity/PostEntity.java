@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class PostEntity {
 
-    @SerializedName("postId")
+    @SerializedName("id")
     private int postId;
 
     @SerializedName("userId")
