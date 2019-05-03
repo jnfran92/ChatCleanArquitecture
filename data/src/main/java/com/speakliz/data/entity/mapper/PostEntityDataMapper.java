@@ -52,7 +52,7 @@ public class PostEntityDataMapper {
     }
 
     /**
-     * Transfor a list of {@link Post} to Collection of {@link PostEntity}
+     * Transfer a list of {@link Post} to Collection of {@link PostEntity}
      * @param postEntityList Collection of {@link PostEntity} to be transformed
      * @return List of {@link Post}
      */

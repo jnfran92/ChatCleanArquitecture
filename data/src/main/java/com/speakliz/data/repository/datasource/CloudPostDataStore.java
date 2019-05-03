@@ -1,6 +1,7 @@
 package com.speakliz.data.repository.datasource;
 
 import com.speakliz.data.entity.PostEntity;
+import com.speakliz.data.suppliers.net.RestApi;
 
 import java.util.List;
 
@@ -11,13 +12,19 @@ import io.reactivex.Observable;
  */
 public class CloudPostDataStore implements PostDataStore {
 
-    @Override
-    public Observable<List<PostEntity>> postEntityList() {
-        return null;
+    private final RestApi restApi;
+
+    public CloudPostDataStore(RestApi restApi) {
+        this.restApi = restApi;
     }
 
     @Override
-    public Observable<PostEntity> postEntityDetails(int id) {
-        return null;
+    public Observable<List<PostEntity>> postEntityList() {
+        return restApi.postEntityList();
+    }
+
+    @Override
+    public Observable<PostEntity> postEntityDetails(int postId) {
+        return restApi.postEntityById(postId);
     }
 }

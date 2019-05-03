@@ -1,22 +1,23 @@
 package com.speakliz.data.repository;
 
+import com.speakliz.data.entity.PostEntity;
 import com.speakliz.data.entity.mapper.PostEntityDataMapper;
 import com.speakliz.data.repository.datasource.PostDataStore;
 import com.speakliz.data.repository.datasource.PostDataStoreFactory;
-import com.speakliz.domain.model.Post;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PostDataRepositoryTest {
@@ -34,22 +35,27 @@ public class PostDataRepositoryTest {
 
     @Before
     public void setUp() {
-//        postDataRepository = PostDataRepository.getInstance(mockPostDataStoreFactory,
-//                mockPostEntityDataMapper);
+        postDataRepository = PostDataRepository.getInstance(
+                mockPostDataStoreFactory,
+                mockPostEntityDataMapper);
 
-//        given(mockPostDataStoreFactory.createDiskDataStore()).willReturn(mockPostDataStore);
+        given(mockPostDataStoreFactory.createDiskDataStore()).willReturn(mockPostDataStore);
+        given(mockPostDataStoreFactory.createCloudDataStore()).willReturn(mockPostDataStore);
     }
 
 
     @Test
-    public void testGetPostData(){
-        PostDataStoreFactory postDataStoreFactory = PostDataStoreFactory.getInstance();
-        PostEntityDataMapper postEntityDataMapper = PostEntityDataMapper.getInstance();
+    public void testGetPostsHappyCase(){
+        List<PostEntity> postEntityList = new ArrayList<>();
+        postEntityList.add(new PostEntity());
 
-        postDataRepository = PostDataRepository.getInstance(postDataStoreFactory,
-                postEntityDataMapper);
+        given(mockPostDataStore.postEntityList()).willReturn(Observable.just(postEntityList));
 
-//        Observable<List<Post>> postsTest = postDataRepository.posts();
+
+        postDataRepository.posts();
+
+        verify(mockPostDataStoreFactory).createCloudDataStore();
+        verify(mockPostDataStore).postEntityList();
 
     }
 
