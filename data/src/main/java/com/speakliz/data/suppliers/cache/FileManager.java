@@ -120,7 +120,7 @@ public class FileManager {
      * @param key A string representing the name that will be used to reference the long value
      * @param value A long value stored.
      */
-    void writeToSharedPrefereces(Context context, String preferencesFileName, String key, long value){
+    void writeToSharedPreferences(Context context, String preferencesFileName, String key, long value){
 
         final SharedPreferences sharedPreferences = context.getSharedPreferences(preferencesFileName,
                 Context.MODE_PRIVATE);
