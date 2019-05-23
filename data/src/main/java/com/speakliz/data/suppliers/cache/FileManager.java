@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class FileManager {
 
-    private FileManager instance;
+    private static FileManager instance;
 
     private FileManager() {
     }
@@ -27,7 +27,7 @@ public class FileManager {
      *
      * @return instance
      */
-    public FileManager getInstance(){
+    public static FileManager getInstance(){
         if(instance == null){
             instance = new FileManager();
         }

@@ -22,8 +22,6 @@ public class SerializerTest {
     @Before
     public void setUp(){
         serializer = Serializer.getInstance();
-
-
     }
 
     @Test
