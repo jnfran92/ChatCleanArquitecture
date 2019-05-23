@@ -1,4 +1,4 @@
-package com.juanchango.presentation.di_test;
+package com.juanchango.presentation.sample.exception;
 
 public class NoBatteriesException extends Exception{
     public NoBatteriesException() {

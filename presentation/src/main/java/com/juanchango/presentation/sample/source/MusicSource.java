@@ -1,7 +1,10 @@
-package com.juanchango.presentation.di_test.source;
+package com.juanchango.presentation.sample.source;
+
+import javax.inject.Inject;
 
 public class MusicSource {
 
+    @Inject
     public MusicSource() {
     }
 

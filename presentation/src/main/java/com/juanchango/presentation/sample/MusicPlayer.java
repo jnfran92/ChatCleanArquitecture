@@ -1,4 +1,4 @@
-package com.juanchango.presentation.di_test;
+package com.juanchango.presentation.sample;
 
 public interface MusicPlayer {
     void turnOn();
