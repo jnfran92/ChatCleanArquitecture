@@ -10,8 +10,6 @@ import com.speakliz.data.suppliers.utils.executor.ThreadExecutor;
 import java.io.File;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 
 /**
  * Implementation of interface {@link PostCache} to get data from cache, shared preferences, etc.
@@ -34,7 +32,7 @@ public class PostCacheImpl implements PostCache {
     private final ThreadExecutor threadExecutor;
     private final Serializer serializer;
 
-    private PostCache instance;
+    private static PostCacheImpl instance;
 
     private PostCacheImpl(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer) {
 
@@ -53,7 +51,7 @@ public class PostCacheImpl implements PostCache {
      * Get instance Singleton Class
      *
      */
-    public PostCache getInstance(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer){
+    public static PostCacheImpl getInstance(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer){
         if(instance == null){
             instance = new PostCacheImpl(context, fileManager, cacheDir, threadExecutor, serializer);
         }
@@ -63,20 +61,17 @@ public class PostCacheImpl implements PostCache {
 
     @Override
     public Observable<PostEntity> get(int postId) {
-        return Observable.create(new ObservableOnSubscribe<PostEntity>() {
-            @Override
-            public void subscribe(ObservableEmitter<PostEntity> emitter) {
+        return Observable.create(emitter -> {
 
-                final File postEntityFile = buildFile(postId);
-                final String jsonString = fileManager.readFileContent(postEntityFile);
-                final PostEntity postEntity = serializer.deserialize(jsonString, PostEntity.class);
+            final File postEntityFile = buildFile(postId);
+            final String jsonString = fileManager.readFileContent(postEntityFile);
+            final PostEntity postEntity = serializer.deserialize(jsonString, PostEntity.class);
 
-                if(postEntity != null){
-                    emitter.onNext(postEntity);
-                    emitter.onComplete();
-                }else {
-                    emitter.onError(new PostNotFoundException());
-                }
+            if(postEntity != null){
+                emitter.onNext(postEntity);
+                emitter.onComplete();
+            }else {
+                emitter.onError(new PostNotFoundException());
             }
         });
     }
