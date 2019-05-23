@@ -63,9 +63,9 @@ public class PostCacheImpl implements PostCache {
     public Observable<PostEntity> get(int postId) {
         return Observable.create(emitter -> {
 
-            final File postEntityFile = buildFile(postId);
-            final String jsonString = fileManager.readFileContent(postEntityFile);
-            final PostEntity postEntity = serializer.deserialize(jsonString, PostEntity.class);
+            final File postEntityFile = PostCacheImpl.this.buildFile(postId);
+            final String jsonString = PostCacheImpl.this.fileManager.readFileContent(postEntityFile);
+            final PostEntity postEntity = PostCacheImpl.this.serializer.deserialize(jsonString, PostEntity.class);
 
             if(postEntity != null){
                 emitter.onNext(postEntity);

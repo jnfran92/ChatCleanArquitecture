@@ -10,12 +10,12 @@ import com.google.gson.Gson;
 public class Serializer {
 
     private final Gson gson = new Gson();
-    private Serializer instance;
+    private static Serializer instance;
 
     private Serializer() {
     }
 
-    public Serializer getInstance(){
+    public static Serializer getInstance(){
         if(instance==null){
             instance = new Serializer();
         }

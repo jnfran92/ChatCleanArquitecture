@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PostCacheImplTest {
 
-    final int FAKE_POST_ID = 666;
+    private static final int FAKE_POST_ID = 666;
 
     @Mock
     private Context contextMock;
@@ -44,28 +44,23 @@ public class PostCacheImplTest {
     @Mock
     private Serializer serializerMock;
 
-    //    @InjectMocks
+    @InjectMocks
     private PostCacheImpl postCacheImpl;
 
     @Before
     public void setUp(){
-        postCacheImpl = PostCacheImpl.getInstance(contextMock,
-                fileManagerMock,
-                cacheDirMock,
-                threadExecutorMock,
-                serializerMock);
-
-        when(fileManagerMock.readFileContent(any(File.class))).thenReturn(null);
     }
 
     @Test
     public void testGetPostEntityHappyCase(){
-
         Observable<PostEntity> postEntityObservable = postCacheImpl.get(FAKE_POST_ID);
-
-        verify(fileManagerMock).readFileContent(any(File.class));
-
     }
 
+    @Test
+    public void testIsCached(){
+        when(fileManagerMock.exists(any(File.class))).thenReturn(true);
+        postCacheImpl.isCached(FAKE_POST_ID);
+        verify(fileManagerMock).exists(any(File.class));
+    }
 
 }
