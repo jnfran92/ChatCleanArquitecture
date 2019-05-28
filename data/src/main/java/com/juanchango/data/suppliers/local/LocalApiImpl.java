@@ -6,6 +6,8 @@ import com.juanchango.data.entity.PostEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 /**
@@ -18,6 +20,7 @@ public class LocalApiImpl implements LocalApi{
     /**
      * Data is created in constructor
      */
+    @Inject
     public LocalApiImpl() {
         entityList=  new ArrayList<>();
         for (int i=0; i<10; i++){

@@ -8,15 +8,17 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Map Json object to {@link com.juanchango.data.entity.PostEntity}
- * Singleton
  */
 public class PostEntityJsonMapper {
 
 
     private final Gson gson;
 
+    @Inject
     public PostEntityJsonMapper() {
         this.gson = new Gson();
     }

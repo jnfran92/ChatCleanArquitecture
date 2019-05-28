@@ -7,29 +7,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Singleton, map {@link PostEntity} to
  * {@link Post}
  */
+@Singleton
 public class PostEntityDataMapper {
-
-    private static PostEntityDataMapper instance;
 
     /**
      * Private Access Singleton
      */
-    private PostEntityDataMapper() {
-    }
-
-    /**
-     * Singleton
-     * @return {@link PostEntityDataMapper}
-     */
-    public static PostEntityDataMapper getInstance(){
-        if(instance == null){
-            instance = new PostEntityDataMapper();
-        }
-        return instance;
+    @Inject
+    PostEntityDataMapper() {
     }
 
 

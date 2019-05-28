@@ -1,6 +1,7 @@
 package com.juanchango.data.repository.datasource;
 
 import com.juanchango.data.entity.PostEntity;
+import com.juanchango.data.suppliers.cache.PostCache;
 import com.juanchango.data.suppliers.local.LocalApi;
 
 import java.util.List;
@@ -13,19 +14,19 @@ import io.reactivex.Observable;
 
 public class DiskPostDataStore implements PostDataStore {
 
-    private final LocalApi localApi;
+    private final PostCache postCache;
 
-    DiskPostDataStore(LocalApi localApi) {
-        this.localApi = localApi;
+    DiskPostDataStore(PostCache postCache) {
+        this.postCache = postCache;
     }
 
     @Override
     public Observable<List<PostEntity>> postEntityList() {
-        return this.localApi.postEntityList();
+        throw new UnsupportedOperationException("Operation is not available");
     }
 
     @Override
-    public Observable<PostEntity> postEntityDetails(int id) {
-        return this.localApi.postEntityById(id);
+    public Observable<PostEntity> postEntityDetails(int postId) {
+        return this.postCache.get(postId);
     }
 }

@@ -9,6 +9,9 @@ import com.juanchango.data.suppliers.utils.executor.ThreadExecutor;
 
 import java.io.File;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 
 /**
@@ -16,7 +19,7 @@ import io.reactivex.Observable;
  * It is a Singleton
  *
  */
-
+@Singleton
 public class PostCacheImpl implements PostCache {
 
 
@@ -32,9 +35,8 @@ public class PostCacheImpl implements PostCache {
     private final ThreadExecutor threadExecutor;
     private final Serializer serializer;
 
-    private static PostCacheImpl instance;
-
-    private PostCacheImpl(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer) {
+    @Inject
+    PostCacheImpl(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer) {
 
         if (context == null || serializer == null || fileManager == null || threadExecutor == null) {
             throw new IllegalArgumentException("Invalid null parameter");
@@ -45,17 +47,6 @@ public class PostCacheImpl implements PostCache {
         this.cacheDir = cacheDir;
         this.threadExecutor = threadExecutor;
         this.serializer = serializer;
-    }
-
-    /**
-     * Get instance Singleton Class
-     *
-     */
-    public static PostCacheImpl getInstance(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer){
-        if(instance == null){
-            instance = new PostCacheImpl(context, fileManager, cacheDir, threadExecutor, serializer);
-        }
-        return instance;
     }
 
 

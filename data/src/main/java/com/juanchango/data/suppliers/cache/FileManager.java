@@ -10,29 +10,21 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Help class to do operations on regular file directories
  * It is a Singleton object
  *
  */
+@Singleton
 public class FileManager {
 
-    private static FileManager instance;
-
+    @Inject
     private FileManager() {
     }
 
-    /**
-     * Singleton init
-     *
-     * @return instance
-     */
-    public static FileManager getInstance(){
-        if(instance == null){
-            instance = new FileManager();
-        }
-        return instance;
-    }
 
     /**
      * Write a file to Disk

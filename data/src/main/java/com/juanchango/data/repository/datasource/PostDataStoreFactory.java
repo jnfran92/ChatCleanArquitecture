@@ -4,43 +4,48 @@ import android.content.Context;
 
 import com.juanchango.data.entity.PostEntity;
 import com.juanchango.data.entity.mapper.PostEntityJsonMapper;
+import com.juanchango.data.suppliers.cache.PostCache;
 import com.juanchango.data.suppliers.local.LocalApi;
 import com.juanchango.data.suppliers.local.LocalApiImpl;
 import com.juanchango.data.suppliers.net.RestApi;
 import com.juanchango.data.suppliers.net.RestApiImpl;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Factory creates a {@link PostDataStore} implementation according needs
  * to get {@link PostEntity}
  * Attention: SINGLETON
  */
-
+@Singleton
 public class PostDataStoreFactory {
 
-    private static PostDataStoreFactory instance;
     private final Context context;
+    private final PostCache postCache;
 
     // It needs Cache
-    public PostDataStoreFactory(Context context) {
+    @Inject
+    public PostDataStoreFactory(Context context, PostCache postCache) {
         this.context = context;
+        this.postCache = postCache;
     }
 
-    public static PostDataStoreFactory getInstance(Context context){
-        if(instance != null) {
-            instance = new PostDataStoreFactory(context);
+    public PostDataStore createDiskDataStore(int postId){
+        PostDataStore postDataStore;
+
+        if(!this.postCache.isExpired() && this.postCache.isCached(postId)){
+               postDataStore = new DiskPostDataStore(postCache);
+        } else{
+            postDataStore = createCloudDataStore();
         }
-        return instance;
-    }
-
-    public PostDataStore createDiskDataStore(){
-        final LocalApi localApi =  new LocalApiImpl();
-        return new DiskPostDataStore(localApi);
+        return postDataStore;
     }
 
     public PostDataStore createCloudDataStore(){
         final PostEntityJsonMapper postEntityJsonMapper = new PostEntityJsonMapper();
         final RestApi restApi = new RestApiImpl(context, postEntityJsonMapper);
 
-        return new CloudPostDataStore(restApi);
+        return new CloudPostDataStore(restApi, postCache);
     }
 }
