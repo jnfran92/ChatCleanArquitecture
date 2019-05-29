@@ -9,6 +9,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
     implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
 
+    //Arrow precondition tools
+    implementation 'com.fernandocejas:arrow:1.0.0'
+
 }
 
 sourceCompatibility = "7"
