@@ -1,6 +1,8 @@
-package com.juanchango.data.suppliers.utils.executor;
+package com.juanchango.data.executor;
 
 import android.support.annotation.NonNull;
+
+import com.juanchango.domain.executor.ThreadExecutor;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;

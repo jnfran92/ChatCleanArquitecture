@@ -5,7 +5,7 @@ import android.content.Context;
 import com.juanchango.data.entity.PostEntity;
 import com.juanchango.data.suppliers.cache.exception.PostNotFoundException;
 import com.juanchango.data.suppliers.cache.serializer.Serializer;
-import com.juanchango.data.suppliers.utils.executor.ThreadExecutor;
+import com.juanchango.domain.executor.ThreadExecutor;
 
 import java.io.File;
 

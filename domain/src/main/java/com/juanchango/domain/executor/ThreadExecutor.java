@@ -1,4 +1,4 @@
-package com.juanchango.data.suppliers.utils.executor;
+package com.juanchango.domain.executor;
 
 import java.util.concurrent.Executor;
 
