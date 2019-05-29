@@ -27,7 +27,7 @@ public abstract class UseCase<T, Params> {
     private final PostExecutionThread postExecutionThread;
     private final CompositeDisposable compositeDisposable;
 
-    public UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, CompositeDisposable compositeDisposable) {
+    UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, CompositeDisposable compositeDisposable) {
         this.threadExecutor = threadExecutor;
         this.postExecutionThread = postExecutionThread;
         this.compositeDisposable = compositeDisposable;
