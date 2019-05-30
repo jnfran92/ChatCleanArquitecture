@@ -3,7 +3,7 @@ package com.juanchango.domain.interactor;
 import com.fernandocejas.arrow.checks.Preconditions;
 import com.juanchango.domain.executor.PostExecutionThread;
 import com.juanchango.domain.executor.ThreadExecutor;
-import com.juanchango.domain.model.Post;
+import com.juanchango.domain.model.PostModel;
 import com.juanchango.domain.repository.PostRepository;
 
 import javax.inject.Inject;
@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class GetPostDetails extends UseCase<Post, GetPostDetails.Params>{
+public class GetPostDetails extends UseCase<PostModel, GetPostDetails.Params>{
 
     private final PostRepository postRepository;
 
@@ -22,7 +22,7 @@ public class GetPostDetails extends UseCase<Post, GetPostDetails.Params>{
     }
 
     @Override
-    Observable<Post> buildUseCaseObservable(Params params) {
+    Observable<PostModel> buildUseCaseObservable(Params params) {
         Preconditions.checkNotNull(params);
         return this.postRepository.post(params.postId);
     }

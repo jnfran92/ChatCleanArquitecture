@@ -8,10 +8,10 @@ import io.reactivex.Observable;
 /**
  * This Interface defines Observable of {@link PostEntity}
  * that have to be delivered for the domain layer
- * In this case Post can be grouped in a list or returned a single
+ * In this case PostModel can be grouped in a list or returned a single
  */
 
-public interface PostDataStore {
+public interface PostDataSource {
     Observable<List<PostEntity>> postEntityList();
     Observable<PostEntity> postEntityDetails(int id);
 }

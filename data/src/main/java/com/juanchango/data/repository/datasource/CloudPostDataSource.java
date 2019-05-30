@@ -7,17 +7,16 @@ import com.juanchango.data.suppliers.net.RestApi;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 
 /**
- * {@link PostDataStore} implementation based on connection to the api (Cloud).
+ * {@link PostDataSource} implementation based on connection to the api (Cloud).
  */
-public class CloudPostDataStore implements PostDataStore {
+public class CloudPostDataSource implements PostDataSource {
 
     private final RestApi restApi;
     private final PostCache postCache;
 
-    CloudPostDataStore(RestApi restApi, PostCache postCache) {
+    CloudPostDataSource(RestApi restApi, PostCache postCache) {
         this.restApi = restApi;
         this.postCache = postCache;
     }
@@ -29,6 +28,6 @@ public class CloudPostDataStore implements PostDataStore {
 
     @Override
     public Observable<PostEntity> postEntityDetails(final int postId) {
-        return restApi.postEntityById(postId).doOnNext(CloudPostDataStore.this.postCache::put);
+        return restApi.postEntityById(postId).doOnNext(CloudPostDataSource.this.postCache::put);
     }
 }

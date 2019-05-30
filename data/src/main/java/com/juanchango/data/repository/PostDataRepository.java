@@ -1,9 +1,9 @@
 package com.juanchango.data.repository;
 
-import com.juanchango.data.entity.mapper.PostEntityDataMapper;
-import com.juanchango.data.repository.datasource.PostDataStore;
-import com.juanchango.data.repository.datasource.PostDataStoreFactory;
-import com.juanchango.domain.model.Post;
+import com.juanchango.data.entity.mapper.PostFromEntityMapper;
+import com.juanchango.data.repository.datasource.PostDataSource;
+import com.juanchango.data.repository.datasource.PostDataSourceFactory;
+import com.juanchango.domain.model.PostModel;
 import com.juanchango.domain.repository.PostRepository;
 
 import java.util.List;
@@ -20,19 +20,19 @@ import io.reactivex.Observable;
 @Singleton
 public class PostDataRepository implements PostRepository {
 
-    private final PostDataStoreFactory postDataStoreFactory;
-    private final PostEntityDataMapper postEntityDataMapper;
+    private final PostDataSourceFactory postDataStoreFactory;
+    private final PostFromEntityMapper postEntityDataMapper;
 
     @Inject
-    PostDataRepository(PostDataStoreFactory postDataStoreFactory,
-                               PostEntityDataMapper postEntityDataMapper) {
+    PostDataRepository(PostDataSourceFactory postDataStoreFactory,
+                       PostFromEntityMapper postEntityDataMapper) {
         this.postDataStoreFactory = postDataStoreFactory;
         this.postEntityDataMapper = postEntityDataMapper;
     }
 
     private static PostDataRepository instance;
-    public static PostDataRepository getInstance(PostDataStoreFactory postDataStoreFactory,
-                                                 PostEntityDataMapper postEntityDataMapper){
+    public static PostDataRepository getInstance(PostDataSourceFactory postDataStoreFactory,
+                                                 PostFromEntityMapper postEntityDataMapper){
         if(instance == null){
             instance = new PostDataRepository(postDataStoreFactory, postEntityDataMapper);
         }
@@ -40,14 +40,14 @@ public class PostDataRepository implements PostRepository {
     }
 
     @Override
-    public Observable<List<Post>> posts() {
-        final PostDataStore postDataStore = this.postDataStoreFactory.createCloudDataStore();
+    public Observable<List<PostModel>> posts() {
+        final PostDataSource postDataStore = this.postDataStoreFactory.createCloudDataStore();
         return postDataStore.postEntityList().map(this.postEntityDataMapper::transform);
     }
 
     @Override
-    public Observable<Post> post(int postId) {
-        final PostDataStore postDataStore = this.postDataStoreFactory.createCloudDataStore();
+    public Observable<PostModel> post(int postId) {
+        final PostDataSource postDataStore = this.postDataStoreFactory.createCloudDataStore();
         return postDataStore.postEntityDetails(postId).map(this.postEntityDataMapper::transform);
     }
 }

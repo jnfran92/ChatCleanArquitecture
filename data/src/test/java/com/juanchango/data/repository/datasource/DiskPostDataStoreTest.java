@@ -19,12 +19,12 @@ public class DiskPostDataStoreTest {
 
     private static final int FAKE_POST_ID = 12;
 
-    @Mock private DiskPostDataStore mockDiskPostDataStore;
+    @Mock private DiskPostDataSource mockDiskPostDataStore;
     @Mock private LocalApi mockLocalApi;
 
     @Before
     public void setUp(){
-        mockDiskPostDataStore = new DiskPostDataStore(mockLocalApi);
+        mockDiskPostDataStore = new DiskPostDataSource(mockLocalApi);
     }
 
     @Test

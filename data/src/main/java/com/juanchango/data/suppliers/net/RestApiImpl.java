@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.juanchango.data.entity.PostEntity;
-import com.juanchango.data.entity.mapper.PostEntityJsonMapper;
+import com.juanchango.data.entity.mapper.PostEntityFromJsonMapper;
 import com.juanchango.data.suppliers.local.LocalApi;
 import com.juanchango.data.suppliers.net.exception.NetworkConnectionException;
 
@@ -19,15 +19,15 @@ import io.reactivex.ObservableOnSubscribe;
 /**
  * Class for Consume Rest API https://jsonplaceholder.typicode.com/posts
  * Implementation of {@link LocalApi}
- * It needs a {@link android.content.Context} context and the {@link com.juanchango.data.entity.mapper.PostEntityJsonMapper}
+ * It needs a {@link android.content.Context} context and the {@link PostEntityFromJsonMapper}
  */
 
 public class RestApiImpl implements RestApi {
 
     private final Context context;
-    private final PostEntityJsonMapper postEntityJsonMapper;
+    private final PostEntityFromJsonMapper postEntityJsonMapper;
 
-    public RestApiImpl(Context context, PostEntityJsonMapper postEntityJsonMapper) {
+    public RestApiImpl(Context context, PostEntityFromJsonMapper postEntityJsonMapper) {
 
         if(context ==null || postEntityJsonMapper == null){
             throw new IllegalArgumentException("Constructor's arguments cannot be null");
@@ -74,7 +74,7 @@ public class RestApiImpl implements RestApi {
     /**
      * Get {@link Observable} type {@link PostEntity} by Id from Json response
      *
-     * @param postId Id of the Post
+     * @param postId Id of the PostModel
      * @return  {@link Observable} type {@link PostEntity}
      */
     @Override

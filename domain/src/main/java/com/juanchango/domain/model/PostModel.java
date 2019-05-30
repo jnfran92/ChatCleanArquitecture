@@ -3,7 +3,7 @@ package com.juanchango.domain.model;
 /**
  * ViewModelPost, notice userId is privateFinal and it have to be initialized from constructor
  */
-public class Post {
+public class PostModel {
 
     private final int postId;
 
@@ -13,7 +13,7 @@ public class Post {
 
     private String body;
 
-    public Post(int postId) {
+    public PostModel(int postId) {
         this.postId = postId;
     }
 

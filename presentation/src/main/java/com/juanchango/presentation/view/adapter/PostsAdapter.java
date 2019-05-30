@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.juanchango.domain.model.PostModel;
 import com.juanchango.presentation.R;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
@@ -19,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Adapter needed for RecyclerView in order to show {@link com.juanchango.domain.model.Post} objects.
+ * Adapter needed for RecyclerView in order to show {@link PostModel} objects.
  */
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHolder> {
 

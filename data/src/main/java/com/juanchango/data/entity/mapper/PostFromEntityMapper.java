@@ -1,7 +1,7 @@
 package com.juanchango.data.entity.mapper;
 
 import com.juanchango.data.entity.PostEntity;
-import com.juanchango.domain.model.Post;
+import com.juanchango.domain.model.PostModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,22 +12,22 @@ import javax.inject.Singleton;
 
 /**
  * Singleton, map {@link PostEntity} to
- * {@link Post}
+ * {@link PostModel}
  */
 @Singleton
-public class PostEntityDataMapper {
+public class PostFromEntityMapper {
 
     /**
      * Private Access Singleton
      */
     @Inject
-    PostEntityDataMapper() {
+    PostFromEntityMapper() {
     }
 
-    private static PostEntityDataMapper instance;
-    public static PostEntityDataMapper getInstance(){
+    private static PostFromEntityMapper instance;
+    public static PostFromEntityMapper getInstance(){
         if(instance == null){
-            instance = new PostEntityDataMapper();
+            instance = new PostFromEntityMapper();
         }
         return instance;
     }
@@ -35,14 +35,14 @@ public class PostEntityDataMapper {
     /**
      * Transform bellow objects
      * @param postEntity {@link PostEntity}
-     * @return {@link Post}
+     * @return {@link PostModel}
      */
-    public Post transform(PostEntity postEntity){
+    public PostModel transform(PostEntity postEntity){
 
-        Post post = null;
+        PostModel post = null;
 
         if(postEntity != null){
-            post = new Post(postEntity.getPostId());
+            post = new PostModel(postEntity.getPostId());
             post.setUserId(postEntity.getUserId());
             post.setBody(postEntity.getBody());
             post.setTitle(postEntity.getTitle());
@@ -51,16 +51,16 @@ public class PostEntityDataMapper {
     }
 
     /**
-     * Transfer a list of {@link Post} to Collection of {@link PostEntity}
+     * Transfer a list of {@link PostModel} to Collection of {@link PostEntity}
      * @param postEntityList Collection of {@link PostEntity} to be transformed
-     * @return List of {@link Post}
+     * @return List of {@link PostModel}
      */
-    public List<Post> transform(Collection<PostEntity> postEntityList){
-        final List<Post> postList = new ArrayList<>(20);
+    public List<PostModel> transform(Collection<PostEntity> postEntityList){
+        final List<PostModel> postList = new ArrayList<>(20);
 
         if(postEntityList != null){
             for (PostEntity postEntity:postEntityList){
-                final Post post = transform(postEntity);
+                final PostModel post = transform(postEntity);
 
                 if(post != null){
                     postList.add(post);

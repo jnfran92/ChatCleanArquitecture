@@ -5,10 +5,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.juanchango.data.entity.mapper.PostEntityDataMapper;
+import com.juanchango.data.entity.mapper.PostFromEntityMapper;
 import com.juanchango.data.executor.JobExecutor;
 import com.juanchango.data.repository.PostDataRepository;
-import com.juanchango.data.repository.datasource.PostDataStoreFactory;
+import com.juanchango.data.repository.datasource.PostDataSourceFactory;
 import com.juanchango.data.suppliers.cache.FileManager;
 import com.juanchango.data.suppliers.cache.PostCache;
 import com.juanchango.data.suppliers.cache.PostCacheImpl;
@@ -16,7 +16,7 @@ import com.juanchango.data.suppliers.cache.serializer.Serializer;
 import com.juanchango.domain.executor.PostExecutionThread;
 import com.juanchango.domain.executor.ThreadExecutor;
 import com.juanchango.domain.interactor.GetPostList;
-import com.juanchango.domain.model.Post;
+import com.juanchango.domain.model.PostModel;
 import com.juanchango.domain.repository.PostRepository;
 import com.juanchango.presentation.R;
 import com.juanchango.presentation.UiThread;
@@ -49,9 +49,9 @@ public class PostListActivity extends AppCompatActivity {
 
 
         // Domain
-        PostDataStoreFactory postDataStoreFactory = PostDataStoreFactory.getInstance(context,
+        PostDataSourceFactory postDataStoreFactory = PostDataSourceFactory.getInstance(context,
                 postCache);
-        PostEntityDataMapper postEntityDataMapper = PostEntityDataMapper.getInstance(); // Singleton
+        PostFromEntityMapper postEntityDataMapper = PostFromEntityMapper.getInstance(); // Singleton
         PostRepository postRepository = PostDataRepository.getInstance(postDataStoreFactory, postEntityDataMapper); // Singleton
 
 
@@ -73,13 +73,13 @@ public class PostListActivity extends AppCompatActivity {
         super.onResume();
         Timber.i("onResume");
 
-        DisposableObserver<List<Post>> listDisposableObserver = new DisposableObserver<List<Post>>() {
+        DisposableObserver<List<PostModel>> listDisposableObserver = new DisposableObserver<List<PostModel>>() {
             @Override
-            public void onNext(List<Post> posts) {
+            public void onNext(List<PostModel> posts) {
                 Timber.i("onNext");
 
-                for (Post post:posts){
-                    Timber.i("Post # %d = %s", post.getPostId(), post.getTitle());
+                for (PostModel post:posts){
+                    Timber.i("PostModel # %d = %s", post.getPostId(), post.getTitle());
                 }
 
             }

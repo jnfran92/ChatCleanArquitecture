@@ -1,9 +1,9 @@
 package com.juanchango.data.repository;
 
 import com.juanchango.data.entity.PostEntity;
-import com.juanchango.data.entity.mapper.PostEntityDataMapper;
-import com.juanchango.data.repository.datasource.PostDataStore;
-import com.juanchango.data.repository.datasource.PostDataStoreFactory;
+import com.juanchango.data.entity.mapper.PostFromEntityMapper;
+import com.juanchango.data.repository.datasource.PostDataSource;
+import com.juanchango.data.repository.datasource.PostDataSourceFactory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,13 +25,13 @@ public class PostDataRepositoryTest {
     private PostDataRepository postDataRepository;
 
     @Mock
-    private PostDataStoreFactory mockPostDataStoreFactory;
+    private PostDataSourceFactory mockPostDataStoreFactory;
 
     @Mock
-    private PostEntityDataMapper mockPostEntityDataMapper;
+    private PostFromEntityMapper mockPostEntityDataMapper;
 
     @Mock
-    private PostDataStore mockPostDataStore;
+    private PostDataSource mockPostDataStore;
 
     @Before
     public void setUp() {

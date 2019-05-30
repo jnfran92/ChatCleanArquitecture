@@ -22,15 +22,15 @@ public class PostEntityJsonMapperTest {
     private static final String FAKE_PATH_SAMPLE_POST
             = "/Users/Juan/GitHub/ChatCleanArquitecture/data/src/test/java/com/speakliz/data/entity/mapper/sample_data/sample_post.json";
 
-    private PostEntityJsonMapper postEntityJsonMapper;
+    private PostEntityFromJsonMapper postEntityJsonMapper;
     private PostEntity fakePostEntity;
 
     @Before
     public void setUp(){
 
-        postEntityJsonMapper = new PostEntityJsonMapper();
+        postEntityJsonMapper = new PostEntityFromJsonMapper();
 
-        // Fake Sample Post Entity
+        // Fake Sample PostModel Entity
         fakePostEntity = new PostEntity();
         fakePostEntity.setPostId(1);
         fakePostEntity.setUserId(1);

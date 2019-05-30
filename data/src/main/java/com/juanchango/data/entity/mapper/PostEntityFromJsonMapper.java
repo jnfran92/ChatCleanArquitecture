@@ -13,13 +13,13 @@ import javax.inject.Inject;
 /**
  * Map Json object to {@link com.juanchango.data.entity.PostEntity}
  */
-public class PostEntityJsonMapper {
+public class PostEntityFromJsonMapper {
 
 
     private final Gson gson;
 
     @Inject
-    public PostEntityJsonMapper() {
+    public PostEntityFromJsonMapper() {
         this.gson = new Gson();
     }
 
@@ -27,7 +27,7 @@ public class PostEntityJsonMapper {
     /**
      * Transform a valid Json String to {@link PostEntity}
      *
-     * @param postJsonResponse A json string representing a Post Details
+     * @param postJsonResponse A json string representing a PostModel Details
      * @return {@link PostEntity}
      * @throws com.google.gson.JsonSyntaxException if the json string is not a valid json structure.
      */
