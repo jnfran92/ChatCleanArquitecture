@@ -24,6 +24,13 @@ public class PostEntityDataMapper {
     PostEntityDataMapper() {
     }
 
+    private static PostEntityDataMapper instance;
+    public static PostEntityDataMapper getInstance(){
+        if(instance == null){
+            instance = new PostEntityDataMapper();
+        }
+        return instance;
+    }
 
     /**
      * Transform bellow objects

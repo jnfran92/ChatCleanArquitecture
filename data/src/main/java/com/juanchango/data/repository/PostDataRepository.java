@@ -30,6 +30,15 @@ public class PostDataRepository implements PostRepository {
         this.postEntityDataMapper = postEntityDataMapper;
     }
 
+    private static PostDataRepository instance;
+    public static PostDataRepository getInstance(PostDataStoreFactory postDataStoreFactory,
+                                                 PostEntityDataMapper postEntityDataMapper){
+        if(instance == null){
+            instance = new PostDataRepository(postDataStoreFactory, postEntityDataMapper);
+        }
+        return instance;
+    }
+
     @Override
     public Observable<List<Post>> posts() {
         final PostDataStore postDataStore = this.postDataStoreFactory.createCloudDataStore();

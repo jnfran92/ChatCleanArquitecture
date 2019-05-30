@@ -2,17 +2,21 @@ package com.juanchango.data.suppliers.cache.serializer;
 
 import com.google.gson.Gson;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Json Serializer/De-Serializer
  * It is Singleton
  */
-
+@Singleton
 public class Serializer {
 
     private final Gson gson = new Gson();
     private static Serializer instance;
 
-    private Serializer() {
+    @Inject
+    Serializer() {
     }
 
     public static Serializer getInstance(){

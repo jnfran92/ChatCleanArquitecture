@@ -1,5 +1,6 @@
-package com.juanchango.presentation.view;
+package com.juanchango.presentation.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -30,7 +31,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Timber.plant(new Timber.DebugTree());
-        Timber.i("on Create using timber");
+        Timber.i("onCreate using timber");
+
+
+
+
     }
 
     /**
@@ -39,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.bt_mainActivity_go)
     void setButtonGoClick(){
         Timber.i("Button go");
+
+        Intent intent = new Intent(this, PostListActivity.class);
+        startActivity(intent);
+
     }
 
 }

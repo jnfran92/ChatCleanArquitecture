@@ -26,9 +26,17 @@ public class PostDataStoreFactory {
 
     // It needs Cache
     @Inject
-    public PostDataStoreFactory(Context context, PostCache postCache) {
+    PostDataStoreFactory(Context context, PostCache postCache) {
         this.context = context;
         this.postCache = postCache;
+    }
+
+    private static PostDataStoreFactory instance;
+    public static PostDataStoreFactory getInstance(Context context, PostCache postCache){
+        if(instance == null){
+            instance = new PostDataStoreFactory(context, postCache);
+        }
+        return instance;
     }
 
     public PostDataStore createDiskDataStore(int postId){

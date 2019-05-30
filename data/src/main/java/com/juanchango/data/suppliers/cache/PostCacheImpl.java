@@ -49,6 +49,14 @@ public class PostCacheImpl implements PostCache {
         this.serializer = serializer;
     }
 
+    private static PostCacheImpl instance;
+    public static PostCacheImpl getInstance(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer){
+        if(instance == null){
+            instance = new PostCacheImpl(context, fileManager, cacheDir, threadExecutor, serializer);
+        }
+
+        return instance;
+    }
 
     @Override
     public Observable<PostEntity> get(int postId) {
