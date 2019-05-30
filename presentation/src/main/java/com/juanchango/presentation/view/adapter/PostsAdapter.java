@@ -80,7 +80,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
      * @param postViewModelList list of {@link PostViewModel} objects.
      */
     public void setPostViewModelList(List<PostViewModel> postViewModelList) {
+        this.validatePostViewModelList(postViewModelList);
         this.postViewModelList = postViewModelList;
+        this.notifyDataSetChanged();
+    }
+
+    private void validatePostViewModelList(List<PostViewModel> postViewModels){
+        if(postViewModels == null){
+            throw new IllegalArgumentException("This list cannot be null");
+        }
     }
 
     //endregion

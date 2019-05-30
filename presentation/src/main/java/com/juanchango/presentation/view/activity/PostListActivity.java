@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.juanchango.data.entity.mapper.PostFromEntityMapper;
 import com.juanchango.data.executor.JobExecutor;
@@ -20,20 +23,29 @@ import com.juanchango.domain.model.PostModel;
 import com.juanchango.domain.repository.PostRepository;
 import com.juanchango.presentation.R;
 import com.juanchango.presentation.UiThread;
+import com.juanchango.presentation.mapper.PostViewModelFromModelMapper;
+import com.juanchango.presentation.view.adapter.PostsAdapter;
+import com.juanchango.presentation.viewmodel.PostViewModel;
 
 import java.io.File;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
 
 public class PostListActivity extends AppCompatActivity {
 
+    @BindView(R.id.rv_postActivity_list)
+    RecyclerView recyclerViewPosts;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_list);
+        ButterKnife.bind(this);
 
 //        Timber.plant(new Timber.DebugTree());
         Timber.i("onCreate");
@@ -63,15 +75,36 @@ public class PostListActivity extends AppCompatActivity {
 
         getPostList = new GetPostList(postRepository, threadExecutorDomain, uiThread, compositeDisposable);
 
+        postViewModelFromModelMapper = PostViewModelFromModelMapper.getInstance();
+
+        // View
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerViewPosts.setLayoutManager(linearLayoutManager);
+        recyclerViewPosts.setItemAnimator(new DefaultItemAnimator());
+
+        postsAdapter = new PostsAdapter(context);
+//        postsAdapter.setPostViewModelList(postViewModels);
+
+        recyclerViewPosts.setAdapter(postsAdapter);
 
     }
 
     GetPostList getPostList;
+    PostViewModelFromModelMapper postViewModelFromModelMapper;
+
+    List<PostViewModel> postViewModels;
+    PostsAdapter postsAdapter;
 
     @Override
     protected void onResume() {
         super.onResume();
         Timber.i("onResume");
+        getData();
+    }
+
+
+    public void getData(){
+        Timber.i("getData");
 
         DisposableObserver<List<PostModel>> listDisposableObserver = new DisposableObserver<List<PostModel>>() {
             @Override
@@ -82,6 +115,7 @@ public class PostListActivity extends AppCompatActivity {
                     Timber.i("PostModel # %d = %s", post.getPostId(), post.getTitle());
                 }
 
+                postViewModels = postViewModelFromModelMapper.transform(posts);
             }
 
             @Override
@@ -92,11 +126,11 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onComplete() {
                 Timber.i("onComplete");
+                postsAdapter.setPostViewModelList(postViewModels);
             }
         };
 
         getPostList.execute(listDisposableObserver, null);
-
     }
 
 
