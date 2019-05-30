@@ -1,6 +1,6 @@
 package com.juanchango.data.executor;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.juanchango.domain.executor.ThreadExecutor;
 

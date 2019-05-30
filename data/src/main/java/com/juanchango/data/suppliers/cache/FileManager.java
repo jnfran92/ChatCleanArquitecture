@@ -22,7 +22,7 @@ import javax.inject.Singleton;
 public class FileManager {
 
     @Inject
-    private FileManager() {
+    public FileManager() {
     }
 
 

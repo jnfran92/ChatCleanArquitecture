@@ -1,11 +1,15 @@
 package com.juanchango.presentation.view;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.speakliz.chatcleanarquitecture.R;
+import com.juanchango.presentation.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 /**
@@ -13,12 +17,28 @@ import timber.log.Timber;
  */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Binds Butter
+     */
+    @BindView(R.id.bt_mainActivity_go)
+    Button buttonGo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         Timber.plant(new Timber.DebugTree());
         Timber.i("on Create using timber");
     }
+
+    /**
+     * Retrieves data Button Go
+     */
+    @OnClick(R.id.bt_mainActivity_go)
+    void setButtonGoClick(){
+        Timber.i("Button go");
+    }
+
 }
