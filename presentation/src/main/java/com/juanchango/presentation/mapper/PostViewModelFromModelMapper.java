@@ -4,6 +4,7 @@ import com.juanchango.domain.model.PostModel;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -52,8 +53,8 @@ public class PostViewModelFromModelMapper {
      * @param postModels List of {@link PostModel}
      * @return List of {@link PostViewModel}
      */
-    public List<PostViewModel> transform(List<PostModel> postModels){
-        final List<PostViewModel> postViewModels = new ArrayList<>();
+    public Collection<PostViewModel> transform(Collection<PostModel> postModels){
+        final Collection<PostViewModel> postViewModels = new ArrayList<>();
         if(postModels != null){
             for (PostModel postModel:postModels){
                 final PostViewModel postViewModel = this.transform(postModel);

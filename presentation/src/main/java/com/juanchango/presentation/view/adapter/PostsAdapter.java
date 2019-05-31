@@ -13,6 +13,7 @@ import com.juanchango.domain.model.PostModel;
 import com.juanchango.presentation.R;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
      * Get ViewModel List {@link PostViewModel}
      * @return list of {@link PostViewModel}
      */
-    public List<PostViewModel> getPostViewModelList() {
+    public Collection<PostViewModel> getPostViewModelList() {
         return postViewModelList;
     }
 
@@ -79,13 +80,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
      * Set viewmodel List {@link PostViewModel}
      * @param postViewModelList list of {@link PostViewModel} objects.
      */
-    public void setPostViewModelList(List<PostViewModel> postViewModelList) {
+    public void setPostViewModelList(Collection<PostViewModel> postViewModelList) {
         this.validatePostViewModelList(postViewModelList);
-        this.postViewModelList = postViewModelList;
+        this.postViewModelList = (List<PostViewModel>) postViewModelList;
         this.notifyDataSetChanged();
     }
 
-    private void validatePostViewModelList(List<PostViewModel> postViewModels){
+    private void validatePostViewModelList(Collection<PostViewModel> postViewModels){
         if(postViewModels == null){
             throw new IllegalArgumentException("This list cannot be null");
         }

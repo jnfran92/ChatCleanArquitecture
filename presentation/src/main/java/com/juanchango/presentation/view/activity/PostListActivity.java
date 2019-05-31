@@ -28,6 +28,7 @@ import com.juanchango.presentation.view.adapter.PostsAdapter;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,6 +55,7 @@ public class PostListActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         FileManager fileManager = new FileManager();
         File cacheDir = getCacheDir();
+
         ThreadExecutor threadExecutorData = JobExecutor.getInstance();        // Singleton
         Serializer serializer = Serializer.getInstance(); // Singleton
 
@@ -63,8 +65,8 @@ public class PostListActivity extends AppCompatActivity {
         // Domain
         PostDataSourceFactory postDataStoreFactory = PostDataSourceFactory.getInstance(context,
                 postCache);
-        PostFromEntityMapper postEntityDataMapper = PostFromEntityMapper.getInstance(); // Singleton
-        PostRepository postRepository = PostDataRepository.getInstance(postDataStoreFactory, postEntityDataMapper); // Singleton
+        PostFromEntityMapper postFromEntityMapper = PostFromEntityMapper.getInstance(); // Singleton
+        PostRepository postRepository = PostDataRepository.getInstance(postDataStoreFactory, postFromEntityMapper); // Singleton
 
 
         // Presentation
@@ -74,11 +76,10 @@ public class PostListActivity extends AppCompatActivity {
         CompositeDisposable compositeDisposable = new CompositeDisposable();
 
         getPostList = new GetPostList(postRepository, threadExecutorDomain, uiThread, compositeDisposable);
-
-        postViewModelFromModelMapper = PostViewModelFromModelMapper.getInstance();
+        postViewModelFromModelMapper = PostViewModelFromModelMapper.getInstance(); // Singleton
 
         // View
-        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerViewPosts.setLayoutManager(linearLayoutManager);
         recyclerViewPosts.setItemAnimator(new DefaultItemAnimator());
 
@@ -92,7 +93,7 @@ public class PostListActivity extends AppCompatActivity {
     GetPostList getPostList;
     PostViewModelFromModelMapper postViewModelFromModelMapper;
 
-    List<PostViewModel> postViewModels;
+    Collection<PostViewModel> postViewModels;
     PostsAdapter postsAdapter;
 
     @Override
