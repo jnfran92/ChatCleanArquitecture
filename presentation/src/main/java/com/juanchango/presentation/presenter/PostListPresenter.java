@@ -1,5 +1,6 @@
 package com.juanchango.presentation.presenter;
 
+import com.juanchango.domain.exception.DefaultErrorBundle;
 import com.juanchango.domain.exception.ErrorBundle;
 import com.juanchango.domain.interactor.DefaultObserver;
 import com.juanchango.domain.interactor.GetPostList;
@@ -77,7 +78,9 @@ public class PostListPresenter implements Presenter {
     }
 
     private void showCollectionInView(Collection<PostModel> postModels){
-        final Collection<PostViewModel> postViewModels = this.postViewModelFromModelMapper.transform(postModels);
+        final Collection<PostViewModel> postViewModels =
+                this.postViewModelFromModelMapper.transform(postModels);
+        this.postListView.renderPostList(postViewModels);
     }
 
     private void showViewErrorMessage(ErrorBundle errorBundle){
@@ -89,12 +92,14 @@ public class PostListPresenter implements Presenter {
     private final class UserListObserver extends DefaultObserver<List<PostModel>> {
         @Override
         public void onNext(List<PostModel> posts) {
-//            PostListPresenter.this.
+            PostListPresenter.this.showCollectionInView(posts);
         }
 
         @Override
         public void onError(Throwable e) {
             PostListPresenter.this.hideViewLoading();
+            PostListPresenter.this.showViewErrorMessage(new DefaultErrorBundle((Exception) e));
+            PostListPresenter.this.showViewRetry();
         }
 
         @Override
