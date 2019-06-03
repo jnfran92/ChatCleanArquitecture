@@ -121,7 +121,7 @@ public class PostListPresenter implements Presenter {
     }
 
     /**
-     * Class Listening data from Observable
+     * Custom class Listening data from Observable
      */
     private final class UserListObserver extends DefaultObserver<List<PostModel>> {
         @Override

@@ -11,6 +11,10 @@ import com.juanchango.presentation.mapper.PostViewModelFromModelMapper;
 import com.juanchango.presentation.view.PostView;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
+/**
+ * {@link Presenter} that controls communication between Domain Layer and View Layer. View must shown
+ * the {@link PostViewModel} object.
+ */
 public class PostDetailsPresenter implements Presenter{
 
     private PostView view;
@@ -85,11 +89,17 @@ public class PostDetailsPresenter implements Presenter{
         view.showError(errorMessage);
     }
 
+    /*
+    Render
+     */
     private void showPostDetailsInView(PostModel postModel){
         final PostViewModel postViewModel = this.postViewModelFromModelMapper.transform(postModel);
         this.view.renderPost(postViewModel);
     }
 
+    /*
+    Listener for observable
+     */
     private final class PostDetailsObserver extends DefaultObserver<PostModel>{
         @Override
         public void onNext(PostModel postModel) {
