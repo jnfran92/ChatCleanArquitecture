@@ -1,7 +1,7 @@
 package com.juanchango.presentation.presenter;
 
 /**
- * Interface representing a presenter in a mdoel view presenter MVP pattern.
+ * Interface representing a presenter in a model view presenter MVP pattern.
  */
 public interface Presenter {
 
@@ -18,7 +18,7 @@ public interface Presenter {
 
     /**
      * Method tha control de lifecycle of the view. It should be called in the view's
-     * (Activit6y or Fragment) onDestroy() method.
+     * (Activity or Fragment) onDestroy() method.
      */
     void destroy();
 
