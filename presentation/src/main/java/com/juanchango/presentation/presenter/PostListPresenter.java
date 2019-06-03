@@ -1,5 +1,7 @@
 package com.juanchango.presentation.presenter;
 
+import androidx.annotation.NonNull;
+
 import com.juanchango.domain.exception.DefaultErrorBundle;
 import com.juanchango.domain.exception.ErrorBundle;
 import com.juanchango.domain.interactor.DefaultObserver;
@@ -20,8 +22,14 @@ import javax.inject.Inject;
  */
 public class PostListPresenter implements Presenter {
 
+    /*
+    View
+     */
     private PostListView postListView;
 
+    /*
+    Use Case and Mapper
+     */
     private final GetPostList getPostListUseCase;
     private final PostViewModelFromModelMapper postViewModelFromModelMapper;
 
@@ -31,10 +39,20 @@ public class PostListPresenter implements Presenter {
         this.postViewModelFromModelMapper = postViewModelFromModelMapper;
     }
 
+    public void setView(@NonNull PostListView view){
+        this.postListView = view;
+    }
+
+    /**
+     * Initializes the presenter by start retriving the user list
+     */
     public void initialize(){
         this.loadPostList();
     }
 
+    /**
+     * Load all posts
+     */
     private void loadPostList(){
         this.hideViewRetry();
         this.showViewLoading();
@@ -45,15 +63,14 @@ public class PostListPresenter implements Presenter {
         this.getPostListUseCase.execute(new UserListObserver(), null);
     }
 
+    /*
+    Overrides: LoadDataView interface methods
+     */
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
     public void destroy() {
@@ -61,6 +78,9 @@ public class PostListPresenter implements Presenter {
         this.postListView = null;
     }
 
+    /*
+    Re-Write explicitly in new methods the view ones.
+     */
     private void showViewLoading(){
         postListView.showLoading();
     }
@@ -77,18 +97,32 @@ public class PostListPresenter implements Presenter {
         postListView.hideRetry();
     }
 
-    private void showCollectionInView(Collection<PostModel> postModels){
-        final Collection<PostViewModel> postViewModels =
-                this.postViewModelFromModelMapper.transform(postModels);
-        this.postListView.renderPostList(postViewModels);
-    }
-
     private void showViewErrorMessage(ErrorBundle errorBundle){
         String errorMessage = ErrorMessageFactory.create(this.postListView.context(),
                 errorBundle.getException());
         this.postListView.showError(errorMessage);
     }
 
+    /**
+     * Show a Collection the {@link PostModel} objects set bellow in the view. This can be converted in
+     * {@link PostViewModel} objects.
+     */
+    private void showCollectionInView(Collection<PostModel> postModels){
+        final Collection<PostViewModel> postViewModels =
+                this.postViewModelFromModelMapper.transform(postModels);
+        this.postListView.renderPostList(postViewModels);
+    }
+
+    /**
+     * Show clicked object: {@link PostViewModel}.
+     */
+    public void onPostClicked(PostViewModel postViewModel){
+        this.postListView.viewPost(postViewModel);
+    }
+
+    /**
+     * Class Listening data from Observable
+     */
     private final class UserListObserver extends DefaultObserver<List<PostModel>> {
         @Override
         public void onNext(List<PostModel> posts) {
