@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         Timber.plant(new Timber.DebugTree());
         Timber.i("onCreate using timber");
-
-
-
-
     }
 
     /**

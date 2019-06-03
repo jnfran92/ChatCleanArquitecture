@@ -2,9 +2,11 @@ package com.juanchango.presentation.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,28 +21,36 @@ import com.juanchango.data.suppliers.cache.serializer.Serializer;
 import com.juanchango.domain.executor.PostExecutionThread;
 import com.juanchango.domain.executor.ThreadExecutor;
 import com.juanchango.domain.interactor.GetPostList;
-import com.juanchango.domain.model.PostModel;
 import com.juanchango.domain.repository.PostRepository;
 import com.juanchango.presentation.R;
 import com.juanchango.presentation.UiThread;
 import com.juanchango.presentation.mapper.PostViewModelFromModelMapper;
+import com.juanchango.presentation.presenter.PostListPresenter;
+import com.juanchango.presentation.view.PostListView;
 import com.juanchango.presentation.view.adapter.PostsAdapter;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
 
-public class PostListActivity extends AppCompatActivity {
+/**
+ * Activity to render a Collection of {@link PostViewModel}, it implements {@link PostListView}
+ * interface.
+ */
+public class PostListActivity extends AppCompatActivity  implements PostListView {
 
     @BindView(R.id.rv_postActivity_list)
     RecyclerView recyclerViewPosts;
+
+    @BindView(R.id.pb_postActivity_loading)
+    ProgressBar progressBarLoading;
+
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +58,10 @@ public class PostListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_list);
         ButterKnife.bind(this);
 
-//        Timber.plant(new Timber.DebugTree());
         Timber.i("onCreate");
 
         // Data
-        Context context = getApplicationContext();
+        context = getApplicationContext();
         FileManager fileManager = new FileManager();
         File cacheDir = getCacheDir();
 
@@ -78,14 +87,18 @@ public class PostListActivity extends AppCompatActivity {
         getPostList = new GetPostList(postRepository, threadExecutorDomain, uiThread, compositeDisposable);
         postViewModelFromModelMapper = PostViewModelFromModelMapper.getInstance(); // Singleton
 
-        // View
+        // Presenters
+        postListPresenter = new PostListPresenter(getPostList,
+                postViewModelFromModelMapper);
+        postListPresenter.setView(this);
+
+
+        // RecyclerView
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerViewPosts.setLayoutManager(linearLayoutManager);
-        recyclerViewPosts.setItemAnimator(new DefaultItemAnimator());
 
+        // Adapter
         postsAdapter = new PostsAdapter(context);
-//        postsAdapter.setPostViewModelList(postViewModels);
-
         recyclerViewPosts.setAdapter(postsAdapter);
 
     }
@@ -96,43 +109,70 @@ public class PostListActivity extends AppCompatActivity {
     Collection<PostViewModel> postViewModels;
     PostsAdapter postsAdapter;
 
+    PostListPresenter postListPresenter;
+
     @Override
     protected void onResume() {
         super.onResume();
         Timber.i("onResume");
-        getData();
+        Timber.i("onResume(): Initialize presenter");
+        postListPresenter.initialize();
+    }
+
+    @Override
+    public void renderPostList(Collection<PostViewModel> postViewModels) {
+        Timber.d("renderPostList(): ");
+        postsAdapter.setPostViewModelList(postViewModels);
+    }
+
+    @Override
+    public void viewPost(PostViewModel postViewModel) {
+        Timber.d("viewPost(): ");
+    }
+
+    @Override
+    public void showLoading() {
+        Timber.d("showLoading(): ");
+        showProgressBar();
+    }
+
+    @Override
+    public void hideLoading() {
+        Timber.d("hideLoading(): ");
+        hideProgressBar();
+    }
+
+    @Override
+    public void showRetry() {
+        Timber.d("showRetry(): ");
+    }
+
+    @Override
+    public void hideRetry() {
+        Timber.d("hideRetry(): ");
+    }
+
+    @Override
+    public void showError(String message) {
+        Timber.d("showError(): ");
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Context context() {
+        return context;
     }
 
 
-    public void getData(){
-        Timber.i("getData");
-
-        DisposableObserver<List<PostModel>> listDisposableObserver = new DisposableObserver<List<PostModel>>() {
-            @Override
-            public void onNext(List<PostModel> posts) {
-                Timber.i("onNext");
-
-                for (PostModel post:posts){
-                    Timber.i("PostModel # %d = %s", post.getPostId(), post.getTitle());
-                }
-
-                postViewModels = postViewModelFromModelMapper.transform(posts);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Timber.i("onError %s", e.toString());
-            }
-
-            @Override
-            public void onComplete() {
-                Timber.i("onComplete");
-                postsAdapter.setPostViewModelList(postViewModels);
-            }
-        };
-
-        getPostList.execute(listDisposableObserver, null);
+    /*
+    Progress Bar methods
+     */
+    private void showProgressBar(){
+        progressBarLoading.setVisibility(View.VISIBLE);
+        progressBarLoading.setIndeterminate(true);
     }
-
+    private void hideProgressBar(){
+        progressBarLoading.setVisibility(View.GONE);
+    }
 
 }
