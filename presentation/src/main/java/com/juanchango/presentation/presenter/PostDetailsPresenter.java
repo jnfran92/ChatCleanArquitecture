@@ -8,7 +8,7 @@ import com.juanchango.domain.interactor.GetPostDetails;
 import com.juanchango.domain.model.PostModel;
 import com.juanchango.presentation.exception.ErrorMessageFactory;
 import com.juanchango.presentation.mapper.PostViewModelFromModelMapper;
-import com.juanchango.presentation.view.PostView;
+import com.juanchango.presentation.view.PostDetailsView;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
 /**
@@ -17,7 +17,7 @@ import com.juanchango.presentation.viewmodel.PostViewModel;
  */
 public class PostDetailsPresenter implements Presenter{
 
-    private PostView view;
+    private PostDetailsView view;
 
     private final GetPostDetails getPostDetailsUseCase;
     private final PostViewModelFromModelMapper postViewModelFromModelMapper;
@@ -28,9 +28,9 @@ public class PostDetailsPresenter implements Presenter{
     }
 
     /**
-     * Set View {@link PostView}
+     * Set View {@link PostDetailsView}
      */
-    public void setView(@NonNull PostView view){
+    public void setView(@NonNull PostDetailsView view){
         this.view = view;
     }
 
