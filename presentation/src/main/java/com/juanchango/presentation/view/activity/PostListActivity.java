@@ -10,36 +10,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.juanchango.data.entity.mapper.PostFromEntityMapper;
-import com.juanchango.data.executor.JobExecutor;
-import com.juanchango.data.repository.PostDataRepository;
-import com.juanchango.data.repository.datasource.PostDataSourceFactory;
-import com.juanchango.data.suppliers.cache.FileManager;
-import com.juanchango.data.suppliers.cache.PostCache;
-import com.juanchango.data.suppliers.cache.PostCacheImpl;
-import com.juanchango.data.suppliers.cache.serializer.Serializer;
-import com.juanchango.domain.executor.PostExecutionThread;
-import com.juanchango.domain.executor.ThreadExecutor;
-import com.juanchango.domain.interactor.GetPostList;
-import com.juanchango.domain.repository.PostRepository;
 import com.juanchango.presentation.R;
-import com.juanchango.presentation.UiThread;
-//import com.juanchango.presentation.di.component.DaggerDataComponent;
-//import com.juanchango.presentation.di.component.DataComponent;
-import com.juanchango.presentation.di.module.ContextModule;
-import com.juanchango.presentation.mapper.PostViewModelFromModelMapper;
+import com.juanchango.presentation.di.component.ApplicationComponent;
+import com.juanchango.presentation.di.component.DaggerApplicationComponent;
+import com.juanchango.presentation.di.module.ApplicationModule;
 import com.juanchango.presentation.presenter.PostListPresenter;
 import com.juanchango.presentation.view.PostListView;
 import com.juanchango.presentation.view.adapter.PostsAdapter;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
-import java.io.File;
 import java.util.Collection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
+
 
 /**
  * Activity to render a Collection of {@link PostViewModel}, it implements {@link PostListView}
@@ -55,6 +40,7 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
 
     Context context;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,36 +49,15 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
 
         Timber.i("onCreate");
 
-
         // Data
         context = getApplicationContext();
 
-//        DataComponent dataComponentDagger = DaggerDataComponent.builder()
-//                .contextModule(new ContextModule(this))
-//                .build();
-//
-//        PostCache postCache = dataComponentDagger.getPostCacheImpl();
-        PostCache postCache = null;
 
-        // Domain
-        PostDataSourceFactory postDataStoreFactory = PostDataSourceFactory.getInstance(context,
-                postCache);
-        PostFromEntityMapper postFromEntityMapper = PostFromEntityMapper.getInstance(); // Singleton
-        PostRepository postRepository = PostDataRepository.getInstance(postDataStoreFactory, postFromEntityMapper); // Singleton
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this)).build();
 
+        postListPresenter = applicationComponent.postListPresenter();
 
-        // Presentation
-        ThreadExecutor threadExecutorDomain = JobExecutor.getInstance(); // Singleton
-        PostExecutionThread uiThread = UiThread.getInstance();  // Singleton
-
-        CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-        getPostList = new GetPostList(postRepository, threadExecutorDomain, uiThread, compositeDisposable);
-        postViewModelFromModelMapper = PostViewModelFromModelMapper.getInstance(); // Singleton
-
-        // Presenters
-        postListPresenter = new PostListPresenter(getPostList,
-                postViewModelFromModelMapper);
         postListPresenter.setView(this);
 
 
@@ -103,15 +68,15 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
         // Adapter
         postsAdapter = new PostsAdapter(context);
         recyclerViewPosts.setAdapter(postsAdapter);
-
     }
 
-    GetPostList getPostList;
-    PostViewModelFromModelMapper postViewModelFromModelMapper;
+//    public void injectPresenter(PostListPresenter postListPresenter, PostsAdapter postsAdapter){
+//        this.postListPresenter = postListPresenter;
+//        this.postsAdapter = postsAdapter;
+//    }
 
-    Collection<PostViewModel> postViewModels;
+
     PostsAdapter postsAdapter;
-
     PostListPresenter postListPresenter;
 
     @Override

@@ -17,6 +17,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,6 +40,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
      * Constructor of adapter, it needs Context
      * @param context app context
      */
+    @Inject
     public PostsAdapter(Context context) {
         this.layoutInflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

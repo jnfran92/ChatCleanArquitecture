@@ -9,16 +9,16 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @Singleton
-public class UiThread implements PostExecutionThread {
+public class UIThread implements PostExecutionThread {
 
     @Inject
-    UiThread() {
+    UIThread() {
     }
 
-    private static UiThread instance;
+    private static UIThread instance;
     public static PostExecutionThread getInstance() {
         if(instance == null){
-            instance = new UiThread();
+            instance = new UIThread();
         }
         return instance;
     }
