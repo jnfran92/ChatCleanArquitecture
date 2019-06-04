@@ -1,39 +1,45 @@
 package com.juanchango.presentation.di.module;
 
-import android.content.Context;
-
 import com.juanchango.data.executor.JobExecutor;
+import com.juanchango.data.repository.datasource.PostDataSourceFactory;
 import com.juanchango.data.suppliers.cache.FileManager;
 import com.juanchango.data.suppliers.cache.serializer.Serializer;
 import com.juanchango.domain.executor.ThreadExecutor;
 
-import java.io.File;
-
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = ContextModule.class)
+@Module
 public class PostCacheModule {
 
-    @Provides
-    public FileManager fileManager(){
-        return new FileManager();
-    }
+//    @Provides
+//    PostDataSourceFactory postDataSourceFactory(PostDataSourceFactory postDataSourceFactory){
+//        return postDataSourceFactory;
+//    }
+//
+//    @Provides
+//    PostDataSourceFactory postDataSourceFactory(PostDataSourceFactory postDataSourceFactory){
+//        return postDataSourceFactory;
+//    }
 
-    @Provides
-    public File cacheDir(Context context){
-        return context.getCacheDir();
-    }
 
-    @Provides
-    public ThreadExecutor threadExecutor(){
-        return new JobExecutor();
-    }
 
-    @Provides
-    public Serializer serializer(){
-        return new Serializer();
-    }
+//    @Provides
+//    FileManager fileManager(){
+//        return new FileManager();
+//    }
+//
+//    @Provides
+//    ThreadExecutor threadExecutor(JobExecutor jobExecutor){
+//        return jobExecutor;
+//    }
+//
+//    @Provides
+//    Serializer serializer(){
+//        return new Serializer();
+//    }
+
+
 
 
 }

@@ -20,14 +20,14 @@ import io.reactivex.Observable;
 @Singleton
 public class PostDataRepository implements PostRepository {
 
-    private final PostDataSourceFactory postDataStoreFactory;
-    private final PostFromEntityMapper postEntityDataMapper;
+    private final PostDataSourceFactory postDataSourceFactory;
+    private final PostFromEntityMapper postFromEntityMapper;
 
     @Inject
-    PostDataRepository(PostDataSourceFactory postDataStoreFactory,
-                       PostFromEntityMapper postEntityDataMapper) {
-        this.postDataStoreFactory = postDataStoreFactory;
-        this.postEntityDataMapper = postEntityDataMapper;
+    PostDataRepository(PostDataSourceFactory postDataSourceFactory,
+                       PostFromEntityMapper postFromEntityMapper) {
+        this.postDataSourceFactory = postDataSourceFactory;
+        this.postFromEntityMapper = postFromEntityMapper;
     }
 
     private static PostDataRepository instance;
@@ -41,13 +41,13 @@ public class PostDataRepository implements PostRepository {
 
     @Override
     public Observable<List<PostModel>> posts() {
-        final PostDataSource postDataStore = this.postDataStoreFactory.createCloudDataStore();
-        return postDataStore.postEntityList().map(this.postEntityDataMapper::transform);
+        final PostDataSource postDataStore = this.postDataSourceFactory.createCloudDataStore();
+        return postDataStore.postEntityList().map(this.postFromEntityMapper::transform);
     }
 
     @Override
     public Observable<PostModel> post(int postId) {
-        final PostDataSource postDataStore = this.postDataStoreFactory.createCloudDataStore();
-        return postDataStore.postEntityDetails(postId).map(this.postEntityDataMapper::transform);
+        final PostDataSource postDataStore = this.postDataSourceFactory.createCloudDataStore();
+        return postDataStore.postEntityDetails(postId).map(this.postFromEntityMapper::transform);
     }
 }

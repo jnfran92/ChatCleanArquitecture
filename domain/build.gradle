@@ -12,11 +12,9 @@ dependencies {
     //Arrow precondition tools
     implementation 'com.fernandocejas:arrow:1.0.0'
 
-    //Dagger
-    implementation 'com.google.dagger:dagger:2.13'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
-
-
+    // Java Annotation and Inject
+    compileOnly "javax.annotation:jsr250-api:1.0"
+    implementation "javax.inject:javax.inject:1"
 
 }
 

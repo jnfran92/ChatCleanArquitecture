@@ -6,6 +6,7 @@ import com.juanchango.data.entity.PostEntity;
 import com.juanchango.data.suppliers.cache.exception.PostNotFoundException;
 import com.juanchango.data.suppliers.cache.serializer.Serializer;
 import com.juanchango.domain.executor.ThreadExecutor;
+import java.lang.Runnable;
 
 import java.io.File;
 
@@ -23,7 +24,7 @@ import io.reactivex.Observable;
 public class PostCacheImpl implements PostCache {
 
 
-    private static final String SETTINGS_FILE_NAME = "com.speakliz.data.SETTINGS";
+    private static final String SETTINGS_FILE_NAME = "com.juanchango.data.SETTINGS";
     private static final String SETTINGS_KEY_LAST_CACHE_UPDATE = "last_cache_update";
 
     private static final String DEFAULT_FILE_NAME = "post_";
@@ -36,7 +37,7 @@ public class PostCacheImpl implements PostCache {
     private final Serializer serializer;
 
     @Inject
-    PostCacheImpl(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer) {
+    PostCacheImpl(Context context, FileManager fileManager, ThreadExecutor threadExecutor, Serializer serializer) {
 
         if (context == null || serializer == null || fileManager == null || threadExecutor == null) {
             throw new IllegalArgumentException("Invalid null parameter");
@@ -44,17 +45,16 @@ public class PostCacheImpl implements PostCache {
 
         this.context = context;
         this.fileManager = fileManager;
-        this.cacheDir = cacheDir;
+        this.cacheDir = context.getCacheDir();
         this.threadExecutor = threadExecutor;
         this.serializer = serializer;
     }
 
     private static PostCacheImpl instance;
-    public static PostCacheImpl getInstance(Context context, FileManager fileManager, File cacheDir, ThreadExecutor threadExecutor, Serializer serializer){
+    public static PostCacheImpl getInstance(Context context, FileManager fileManager, ThreadExecutor threadExecutor, Serializer serializer){
         if(instance == null){
-            instance = new PostCacheImpl(context, fileManager, cacheDir, threadExecutor, serializer);
+            instance = new PostCacheImpl(context, fileManager, threadExecutor, serializer);
         }
-
         return instance;
     }
 

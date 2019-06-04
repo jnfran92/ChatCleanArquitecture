@@ -54,9 +54,9 @@ dependencies {
 
     androidTestImplementation 'org.mockito:mockito-android:2.7.22'
 
-    //Dagger
-    implementation 'com.google.dagger:dagger:2.13'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
+    // Java Annotation and Inject
+    compileOnly "javax.annotation:jsr250-api:1.0"
+    implementation "javax.inject:javax.inject:1"
 
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

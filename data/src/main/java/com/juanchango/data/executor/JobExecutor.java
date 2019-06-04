@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Decorated {@link java.util.concurrent.ThreadPoolExecutor}
+ * Decorated {@link ThreadPoolExecutor}
  */
 @Singleton
 public class JobExecutor implements ThreadExecutor {
