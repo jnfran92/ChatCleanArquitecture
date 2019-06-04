@@ -60,6 +60,7 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
 
         Timber.i("onCreate");
 
+
         // Data
         context = getApplicationContext();
         FileManager fileManager = new FileManager();
