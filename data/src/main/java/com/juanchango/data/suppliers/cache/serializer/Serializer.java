@@ -16,7 +16,7 @@ public class Serializer {
     private static Serializer instance;
 
     @Inject
-    Serializer() {
+    public Serializer() {
     }
 
     public static Serializer getInstance(){

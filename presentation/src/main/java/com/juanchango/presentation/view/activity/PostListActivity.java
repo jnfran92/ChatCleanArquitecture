@@ -24,6 +24,9 @@ import com.juanchango.domain.interactor.GetPostList;
 import com.juanchango.domain.repository.PostRepository;
 import com.juanchango.presentation.R;
 import com.juanchango.presentation.UiThread;
+import com.juanchango.presentation.di.component.DaggerDataComponent;
+import com.juanchango.presentation.di.component.DataComponent;
+import com.juanchango.presentation.di.module.ContextModule;
 import com.juanchango.presentation.mapper.PostViewModelFromModelMapper;
 import com.juanchango.presentation.presenter.PostListPresenter;
 import com.juanchango.presentation.view.PostListView;
@@ -63,14 +66,21 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
 
         // Data
         context = getApplicationContext();
-        FileManager fileManager = new FileManager();
-        File cacheDir = getCacheDir();
+//        FileManager fileManager = new FileManager();  // Singleton - Wrong constructor
+//        File cacheDir = getCacheDir();
+//
+//        ThreadExecutor threadExecutorData = JobExecutor.getInstance();        // Singleton
+//        Serializer serializer = Serializer.getInstance(); // Singleton
 
-        ThreadExecutor threadExecutorData = JobExecutor.getInstance();        // Singleton
-        Serializer serializer = Serializer.getInstance(); // Singleton
 
-        PostCache postCache = PostCacheImpl.getInstance(context, fileManager, cacheDir, threadExecutorData, serializer);         // Singleton
 
+//        PostCache postCache = PostCacheImpl.getInstance(context, fileManager, cacheDir, threadExecutorData, serializer);         // Singleton
+
+        DataComponent dataComponentDagger = DaggerDataComponent.builder()
+                .contextModule(new ContextModule(this))
+                .build();
+
+        PostCache postCache = dataComponentDagger.getPostCacheImpl();
 
         // Domain
         PostDataSourceFactory postDataStoreFactory = PostDataSourceFactory.getInstance(context,

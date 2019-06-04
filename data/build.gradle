@@ -56,7 +56,7 @@ dependencies {
 
     //Dagger
     implementation 'com.google.dagger:dagger:2.13'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
 
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
