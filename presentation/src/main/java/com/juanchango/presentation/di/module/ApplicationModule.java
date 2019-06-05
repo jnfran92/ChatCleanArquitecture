@@ -10,6 +10,8 @@ import com.juanchango.domain.executor.PostExecutionThread;
 import com.juanchango.domain.executor.ThreadExecutor;
 import com.juanchango.domain.repository.PostRepository;
 import com.juanchango.presentation.UIThread;
+import com.juanchango.presentation.presenter.PostListPresenter;
+import com.juanchango.presentation.presenter.Presenter;
 
 import javax.inject.Singleton;
 
@@ -51,8 +53,17 @@ public class ApplicationModule {
         return uiThread;
     }
 
-//    @Provides
-//    CompositeDisposable compositeDisposable(){
-//        return new CompositeDisposable();
-//    }
+    /*
+    Activity providers
+     */
+    @Provides
+    CompositeDisposable compositeDisposable(){
+        return new CompositeDisposable();
+    }
+
+    @Provides
+    Presenter presenter(PostListPresenter postListPresenter){
+        return postListPresenter;
+    }
+
 }

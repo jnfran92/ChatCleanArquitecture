@@ -21,6 +21,8 @@ import com.juanchango.presentation.viewmodel.PostViewModel;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -38,8 +40,6 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
     @BindView(R.id.pb_postActivity_loading)
     ProgressBar progressBarLoading;
 
-    Context context;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,21 +52,24 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
         // Data
         context = getApplicationContext();
 
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
 
-        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this)).build();
+        applicationComponent.inject(this);
 
-        postListPresenter = applicationComponent.postListPresenter();
+
+//        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
+//                .applicationModule(new ApplicationModule(this)).build();
+//
+//        postListPresenter = applicationComponent.postListPresenter();
 
         postListPresenter.setView(this);
-
 
         // RecyclerView
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerViewPosts.setLayoutManager(linearLayoutManager);
 
         // Adapter
-        postsAdapter = new PostsAdapter(context);
+//        postsAdapter = new PostsAdapter(context);
         recyclerViewPosts.setAdapter(postsAdapter);
     }
 
@@ -75,9 +78,10 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
 //        this.postsAdapter = postsAdapter;
 //    }
 
+    Context context;
+    @Inject PostsAdapter postsAdapter;
 
-    PostsAdapter postsAdapter;
-    PostListPresenter postListPresenter;
+    @Inject PostListPresenter postListPresenter;
 
     @Override
     protected void onResume() {
