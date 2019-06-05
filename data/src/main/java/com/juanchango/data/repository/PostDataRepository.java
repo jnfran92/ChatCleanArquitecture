@@ -30,14 +30,6 @@ public class PostDataRepository implements PostRepository {
         this.postFromEntityMapper = postFromEntityMapper;
     }
 
-    private static PostDataRepository instance;
-    public static PostDataRepository getInstance(PostDataSourceFactory postDataStoreFactory,
-                                                 PostFromEntityMapper postEntityDataMapper){
-        if(instance == null){
-            instance = new PostDataRepository(postDataStoreFactory, postEntityDataMapper);
-        }
-        return instance;
-    }
 
     @Override
     public Observable<List<PostModel>> posts() {

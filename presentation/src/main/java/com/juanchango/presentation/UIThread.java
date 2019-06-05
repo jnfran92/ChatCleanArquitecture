@@ -15,14 +15,6 @@ public class UIThread implements PostExecutionThread {
     UIThread() {
     }
 
-    private static UIThread instance;
-    public static PostExecutionThread getInstance() {
-        if(instance == null){
-            instance = new UIThread();
-        }
-        return instance;
-    }
-
     @Override
     public Scheduler getScheduler() {
         return AndroidSchedulers.mainThread();

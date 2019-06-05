@@ -21,19 +21,10 @@ public class JobExecutor implements ThreadExecutor {
     private final ThreadPoolExecutor threadPoolExecutor;
 
     @Inject
-    public JobExecutor() {
+    JobExecutor() {
         threadPoolExecutor = new ThreadPoolExecutor(3, 5,
                 10, TimeUnit.SECONDS,
                 new LinkedBlockingQueue<>(), new JobThreadFactory());
-    }
-
-
-    private static JobExecutor instance;
-    public static JobExecutor getInstance(){
-        if(instance == null){
-            instance = new JobExecutor();
-        }
-        return instance;
     }
 
     @Override

@@ -16,14 +16,7 @@ public class Serializer {
     private static Serializer instance;
 
     @Inject
-    public Serializer() {
-    }
-
-    public static Serializer getInstance(){
-        if(instance==null){
-            instance = new Serializer();
-        }
-        return instance;
+    Serializer() {
     }
 
     /**

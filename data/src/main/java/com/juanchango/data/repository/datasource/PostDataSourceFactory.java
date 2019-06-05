@@ -22,19 +22,10 @@ public class PostDataSourceFactory {
     private final Context context;
     private final PostCache postCache;
 
-    // It needs Cache
     @Inject
     PostDataSourceFactory(Context context, PostCache postCache) {
         this.context = context;
         this.postCache = postCache;
-    }
-
-    private static PostDataSourceFactory instance;
-    public static PostDataSourceFactory getInstance(Context context, PostCache postCache){
-        if(instance == null){
-            instance = new PostDataSourceFactory(context, postCache);
-        }
-        return instance;
     }
 
     public PostDataSource createDiskDataStore(int postId){

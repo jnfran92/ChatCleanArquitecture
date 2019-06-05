@@ -24,13 +24,6 @@ public class PostFromEntityMapper {
     PostFromEntityMapper() {
     }
 
-    private static PostFromEntityMapper instance;
-    public static PostFromEntityMapper getInstance(){
-        if(instance == null){
-            instance = new PostFromEntityMapper();
-        }
-        return instance;
-    }
 
     /**
      * Transform bellow objects

@@ -22,13 +22,6 @@ public class PostViewModelFromModelMapper {
     PostViewModelFromModelMapper() {
     }
 
-    private static PostViewModelFromModelMapper instance;
-    public static PostViewModelFromModelMapper getInstance(){
-        if(instance == null){
-            instance = new PostViewModelFromModelMapper();
-        }
-        return instance;
-    }
 
     /**
      * Transform bellow objects.

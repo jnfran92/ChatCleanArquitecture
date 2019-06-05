@@ -35,12 +35,12 @@ public class PostDataRepositoryTest {
 
     @Before
     public void setUp() {
-        postDataRepository = PostDataRepository.getInstance(
-                mockPostDataStoreFactory,
-                mockPostEntityDataMapper);
-
-        given(mockPostDataStoreFactory.createDiskDataStore()).willReturn(mockPostDataStore);
-        given(mockPostDataStoreFactory.createCloudDataStore()).willReturn(mockPostDataStore);
+//        postDataRepository = PostDataRepository.getInstance(
+//                mockPostDataStoreFactory,
+//                mockPostEntityDataMapper);
+//
+//        given(mockPostDataStoreFactory.createDiskDataStore()).willReturn(mockPostDataStore);
+//        given(mockPostDataStoreFactory.createCloudDataStore()).willReturn(mockPostDataStore);
     }
 
 
