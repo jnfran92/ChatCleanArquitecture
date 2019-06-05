@@ -1,9 +1,6 @@
 package com.juanchango.presentation.di.module;
 
 import android.content.Context;
-import android.widget.LinearLayout;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.juanchango.data.executor.JobExecutor;
 import com.juanchango.data.repository.PostDataRepository;
@@ -12,30 +9,26 @@ import com.juanchango.data.suppliers.cache.PostCacheImpl;
 import com.juanchango.domain.executor.PostExecutionThread;
 import com.juanchango.domain.executor.ThreadExecutor;
 import com.juanchango.domain.repository.PostRepository;
+import com.juanchango.presentation.PlayingCleanApplication;
 import com.juanchango.presentation.UIThread;
-import com.juanchango.presentation.di.ApplicationContext;
-import com.juanchango.presentation.presenter.PostListPresenter;
-import com.juanchango.presentation.presenter.Presenter;
-import com.juanchango.presentation.view.adapter.PostAdapterLayoutManager;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.disposables.CompositeDisposable;
 
 @Module
 public class ApplicationModule {
 
-    private final Context context;
+    private final PlayingCleanApplication application;
 
-    public ApplicationModule(Context context) {
-        this.context = context;
+    public ApplicationModule(PlayingCleanApplication application) {
+        this.application = application;
     }
 
     @Provides @Singleton
     Context context(){
-        return context;
+        return this.application;
     }
 
     @Provides @Singleton
@@ -58,8 +51,4 @@ public class ApplicationModule {
         return uiThread;
     }
 
-    @Provides
-    CompositeDisposable compositeDisposable(){
-        return new CompositeDisposable();
-    }
 }

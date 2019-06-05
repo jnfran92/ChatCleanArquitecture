@@ -16,11 +16,8 @@ import timber.log.Timber;
 /**
  * Main application screen. This is the app entry point.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-    /**
-     * Binds Butter
-     */
     @BindView(R.id.bt_mainActivity_go)
     Button buttonGo;
 
@@ -40,10 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.bt_mainActivity_go)
     void setButtonGoClick(){
         Timber.i("Button go");
-
-        Intent intent = new Intent(this, PostListActivity.class);
-        startActivity(intent);
-
+        this.navigator.navigateToPostList(this);
     }
 
 }

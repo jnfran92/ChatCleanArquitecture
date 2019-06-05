@@ -18,9 +18,8 @@ public class GetPostList extends UseCase<List<PostModel>, Void>{
 
     @Inject
     public GetPostList(PostRepository postRepository, ThreadExecutor threadExecutor,
-                       PostExecutionThread postExecutionThread,
-                       CompositeDisposable compositeDisposable) {
-        super(threadExecutor, postExecutionThread, compositeDisposable);
+                       PostExecutionThread postExecutionThread) {
+        super(threadExecutor, postExecutionThread);
         this.postRepository = postRepository;
     }
 

@@ -1,19 +1,18 @@
 package com.juanchango.presentation.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.juanchango.presentation.PlayingCleanApplication;
 import com.juanchango.presentation.R;
-import com.juanchango.presentation.di.component.ActivityComponent;
-import com.juanchango.presentation.di.component.ApplicationComponent;
-import com.juanchango.presentation.di.component.DaggerActivityComponent;
+import com.juanchango.presentation.di.component.DaggerPostComponent;
+import com.juanchango.presentation.di.component.PostComponent;
+import com.juanchango.presentation.navigation.Navigator;
 import com.juanchango.presentation.presenter.PostListPresenter;
 import com.juanchango.presentation.view.PostListView;
 import com.juanchango.presentation.view.adapter.PostAdapterLayoutManager;
@@ -28,12 +27,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-
 /**
  * Activity to render a Collection of {@link PostViewModel}, it implements {@link PostListView}
  * interface.
  */
-public class PostListActivity extends AppCompatActivity  implements PostListView {
+public class PostListActivity extends BaseActivity  implements PostListView {
 
     @BindView(R.id.rv_postActivity_list)
     RecyclerView recyclerViewPosts;
@@ -41,10 +39,19 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
     @BindView(R.id.pb_postActivity_loading)
     ProgressBar progressBarLoading;
 
-    @Inject Context context;
     @Inject PostsAdapter postsAdapter;
     @Inject PostListPresenter postListPresenter;
     @Inject PostAdapterLayoutManager postAdapterLayoutManager;
+
+    /**
+     * Creates and intent used for {@link Navigator}
+     *
+     * @param context Application Context.
+     * @return  Intent for this class.
+     */
+    public static Intent getCallingIntent(Context context) {
+        return new Intent(context, PostListActivity.class);
+    }
 
 
     @Override
@@ -54,22 +61,20 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
         ButterKnife.bind(this);
         Timber.i("onCreate");
 
-        initInjection();
-        startViews();
+        this.initInjection();
+        this.startViews();
     }
 
     private void initInjection(){
-
-        // App-inj
-        PlayingCleanApplication application = (PlayingCleanApplication) getApplication();
-        ApplicationComponent applicationComponent = application.getApplicationComponent();
-
         // Activity-inj
-        ActivityComponent activityComponent = DaggerActivityComponent
+
+        PostComponent postComponent = DaggerPostComponent
                 .builder()
-                .applicationComponent(applicationComponent)
+                .applicationComponent(this.getApplicationComponent())
+                .activityModule(this.getActivityModule())
                 .build();
-        activityComponent.inject(this);
+
+        postComponent.inject(this);
     }
 
     private void startViews(){
@@ -87,6 +92,19 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
         Timber.i("onResume");
         Timber.i("onResume(): Initialize presenter");
         postListPresenter.initialize();
+        postListPresenter.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        postListPresenter.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        postListPresenter.destroy();
     }
 
     @Override
@@ -125,12 +143,12 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
     @Override
     public void showError(String message) {
         Timber.d("showError(): ");
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public Context context() {
-        return context;
+        return getApplicationContext();
     }
 
     /*

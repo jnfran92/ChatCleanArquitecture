@@ -16,8 +16,8 @@ public class GetPostDetails extends UseCase<PostModel, GetPostDetails.Params>{
     private final PostRepository postRepository;
 
     @Inject
-    public GetPostDetails(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, CompositeDisposable compositeDisposable, PostRepository postRepository) {
-        super(threadExecutor, postExecutionThread, compositeDisposable);
+    public GetPostDetails(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, PostRepository postRepository) {
+        super(threadExecutor, postExecutionThread);
         this.postRepository = postRepository;
     }
 

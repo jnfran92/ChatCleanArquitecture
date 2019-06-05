@@ -1,10 +1,8 @@
 package com.juanchango.presentation.di.module;
 
-import android.content.Context;
+import android.app.Activity;
 
-import com.juanchango.presentation.di.ActivityContext;
-
-import javax.inject.Singleton;
+import com.juanchango.presentation.di.PerActivity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,15 +10,14 @@ import dagger.Provides;
 @Module
 public class ActivityModule {
 
-    private final Context context;
+    private final Activity activity;
 
-    public ActivityModule(Context context) {
-        this.context = context;
+    public ActivityModule(Activity activity) {
+        this.activity = activity;
     }
 
-    @Provides @ActivityContext
-    Context context(){
-        return context.getApplicationContext();
+    @Provides @PerActivity
+    Activity activity(){
+        return this.activity;
     }
-
 }
