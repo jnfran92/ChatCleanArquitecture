@@ -2,6 +2,7 @@ package com.juanchango.presentation.presenter;
 
 import androidx.annotation.NonNull;
 
+import com.juanchango.domain.exception.DefaultErrorBundle;
 import com.juanchango.domain.exception.ErrorBundle;
 import com.juanchango.domain.interactor.DefaultObserver;
 import com.juanchango.domain.interactor.GetPostDetails;
@@ -113,7 +114,7 @@ public class PostDetailsPresenter implements Presenter{
         @Override
         public void onError(Throwable e) {
             PostDetailsPresenter.this.hideViewLoading();
-            PostDetailsPresenter.this.showViewError((ErrorBundle) e);
+            PostDetailsPresenter.this.showViewError(new DefaultErrorBundle((Exception) e));
             PostDetailsPresenter.this.showViewRetry();
         }
 
