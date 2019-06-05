@@ -26,7 +26,7 @@ import io.reactivex.disposables.CompositeDisposable;
 @Module
 public class ApplicationModule {
 
-    private Context context;
+    private final Context context;
 
     public ApplicationModule(Context context) {
         this.context = context;
@@ -64,15 +64,4 @@ public class ApplicationModule {
     CompositeDisposable compositeDisposable(){
         return new CompositeDisposable();
     }
-
-//    @Provides
-//    Presenter presenter(PostListPresenter postListPresenter){
-//        return postListPresenter;
-//    }
-
-//    @Provides
-//    PostAdapterLayoutManager postAdapterLayoutManager(Context context){
-//        return new PostAdapterLayoutManager(context);
-//    }
-
 }

@@ -40,11 +40,9 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
     @BindView(R.id.pb_postActivity_loading)
     ProgressBar progressBarLoading;
 
-//    Context context;
+    @Inject Context context;
     @Inject PostsAdapter postsAdapter;
-
     @Inject PostListPresenter postListPresenter;
-
     @Inject PostAdapterLayoutManager postAdapterLayoutManager;
 
 
@@ -118,12 +116,12 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
     @Override
     public void showError(String message) {
         Timber.d("showError(): ");
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public Context context() {
-        return getApplicationContext();
+        return context;
     }
 
     /*

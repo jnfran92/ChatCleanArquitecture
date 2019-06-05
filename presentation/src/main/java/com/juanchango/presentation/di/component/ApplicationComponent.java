@@ -15,5 +15,4 @@ public interface ApplicationComponent {
 //    PostDataRepository postDataRepository();
 //    PostListPresenter postListPresenter();
     void inject(PostListActivity postListActivity);
-
 }
