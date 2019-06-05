@@ -3,6 +3,10 @@ package com.juanchango.presentation;
 import android.app.Application;
 import android.content.res.Configuration;
 
+import com.juanchango.presentation.di.component.ApplicationComponent;
+import com.juanchango.presentation.di.component.DaggerApplicationComponent;
+import com.juanchango.presentation.di.module.ApplicationModule;
+
 import timber.log.Timber;
 
 /**
@@ -10,11 +14,14 @@ import timber.log.Timber;
  */
 public class PlayingCleanApplication extends Application {
 
+    private ApplicationComponent applicationComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Timber.plant(new Timber.DebugTree());
         Timber.i("onCreate(): PlayingCleanApplication");
+        initInject();
     }
 
     @Override
@@ -29,4 +36,13 @@ public class PlayingCleanApplication extends Application {
         Timber.i("onLowMemory(): ");
     }
 
+    void initInject(){
+        Timber.i("initInject(): ");
+        applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this)).build();
+    }
+
+    public ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
+    }
 }

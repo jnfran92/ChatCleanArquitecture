@@ -2,6 +2,8 @@ package com.juanchango.presentation.di.module;
 
 import android.content.Context;
 
+import com.juanchango.presentation.di.ActivityContext;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -16,10 +18,9 @@ public class ActivityModule {
         this.context = context;
     }
 
-    @Provides @Singleton
+    @Provides @ActivityContext
     Context context(){
-        return context;
+        return context.getApplicationContext();
     }
-
 
 }

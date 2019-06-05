@@ -9,10 +9,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.juanchango.presentation.PlayingCleanApplication;
 import com.juanchango.presentation.R;
+import com.juanchango.presentation.di.component.ActivityComponent;
 import com.juanchango.presentation.di.component.ApplicationComponent;
-import com.juanchango.presentation.di.component.DaggerApplicationComponent;
-import com.juanchango.presentation.di.module.ApplicationModule;
+import com.juanchango.presentation.di.component.DaggerActivityComponent;
 import com.juanchango.presentation.presenter.PostListPresenter;
 import com.juanchango.presentation.view.PostListView;
 import com.juanchango.presentation.view.adapter.PostAdapterLayoutManager;
@@ -58,9 +59,17 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
     }
 
     private void initInjection(){
-        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().
-                applicationModule(new ApplicationModule(this)).build();
-        applicationComponent.inject(this);
+
+        // App-inj
+        PlayingCleanApplication application = (PlayingCleanApplication) getApplication();
+        ApplicationComponent applicationComponent = application.getApplicationComponent();
+
+        // Activity-inj
+        ActivityComponent activityComponent = DaggerActivityComponent
+                .builder()
+                .applicationComponent(applicationComponent)
+                .build();
+        activityComponent.inject(this);
     }
 
     private void startViews(){

@@ -1,6 +1,7 @@
 package com.juanchango.presentation.mapper;
 
 import com.juanchango.domain.model.PostModel;
+import com.juanchango.presentation.di.PerActivity;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import javax.inject.Singleton;
  * Maps objects from Domain Layer to Presentation Layer
  * {@link PostModel} to {@link com.juanchango.presentation.viewmodel.PostViewModel}.
  */
-@Singleton
+@PerActivity
 public class PostViewModelFromModelMapper {
 
     @Inject

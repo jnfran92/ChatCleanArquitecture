@@ -4,11 +4,14 @@ import com.juanchango.presentation.di.PerActivity;
 import com.juanchango.presentation.di.module.ActivityModule;
 import com.juanchango.presentation.di.module.ApplicationModule;
 import com.juanchango.presentation.presenter.PostListPresenter;
+import com.juanchango.presentation.view.activity.PostListActivity;
+
+import javax.inject.Singleton;
 
 import dagger.Component;
 
-//@PerActivity
-//@Component(modules = {ActivityModule.class, ApplicationModule.class})
-//public interface ActivityComponent {
-//    PostListPresenter postListPresenter();
-//}
+@PerActivity
+@Component(dependencies = ApplicationComponent.class)
+public interface ActivityComponent {
+    void inject(PostListActivity postListActivity);
+}

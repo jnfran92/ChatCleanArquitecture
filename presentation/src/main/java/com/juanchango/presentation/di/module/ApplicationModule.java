@@ -13,6 +13,7 @@ import com.juanchango.domain.executor.PostExecutionThread;
 import com.juanchango.domain.executor.ThreadExecutor;
 import com.juanchango.domain.repository.PostRepository;
 import com.juanchango.presentation.UIThread;
+import com.juanchango.presentation.di.ApplicationContext;
 import com.juanchango.presentation.presenter.PostListPresenter;
 import com.juanchango.presentation.presenter.Presenter;
 import com.juanchango.presentation.view.adapter.PostAdapterLayoutManager;
@@ -34,7 +35,7 @@ public class ApplicationModule {
 
     @Provides @Singleton
     Context context(){
-        return context.getApplicationContext();
+        return context;
     }
 
     @Provides @Singleton
@@ -57,9 +58,6 @@ public class ApplicationModule {
         return uiThread;
     }
 
-    /*
-    Activity providers
-     */
     @Provides
     CompositeDisposable compositeDisposable(){
         return new CompositeDisposable();
