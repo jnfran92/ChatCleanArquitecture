@@ -1,7 +1,5 @@
 package com.juanchango.presentation.view.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +10,7 @@ import timber.log.Timber;
 
 import com.juanchango.presentation.navigation.Navigator;
 
-public class PostDetailsActivity extends AppCompatActivity {
+public class PostDetailsActivity extends BaseActivity {
 
     /**
      * Creates and intent used for {@link Navigator}

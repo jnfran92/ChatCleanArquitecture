@@ -21,6 +21,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * Adapter needed for RecyclerView in order to show {@link PostModel} objects.
@@ -35,6 +37,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     //region Owner methods
 
     private final LayoutInflater layoutInflater;
+
+    public interface Listener{
+        void onClickItem(PostViewModel postViewModel);
+    }
+
+    private Listener listener;
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
 
     /**
      * Constructor of adapter, it needs Context
@@ -60,6 +72,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
         holder.textViewId.setText(String.valueOf(postViewModel.getPostId()));
         holder.textViewTitle.setText(postViewModel.getTitle());
         holder.textViewBody.setText(postViewModel.getBody());
+
+        holder.textViewTitle.setOnClickListener(view -> {
+            if(listener != null){
+                listener.onClickItem(postViewModel);
+            }
+        });
     }
 
     @Override

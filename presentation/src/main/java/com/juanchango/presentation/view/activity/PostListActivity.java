@@ -80,9 +80,10 @@ public class PostListActivity extends BaseActivity  implements PostListView {
     private void startViews(){
         // Presenter
         postListPresenter.setView(this);
+        // Adapter
+        postsAdapter.setListener(new OnItemListener());
         // RecyclerView
         recyclerViewPosts.setLayoutManager(postAdapterLayoutManager);
-        // Adapter
         recyclerViewPosts.setAdapter(postsAdapter);
     }
 
@@ -161,5 +162,15 @@ public class PostListActivity extends BaseActivity  implements PostListView {
     private void hideProgressBar(){
         progressBarLoading.setVisibility(View.GONE);
     }
+
+    // Listener Recycler View Class
+    private final class OnItemListener implements PostsAdapter.Listener{
+        @Override
+        public void onClickItem(PostViewModel postViewModel) {
+            Timber.i("onClickItem(): Post Id %d", postViewModel.getPostId());
+            PostListActivity.this.navigator.navigateToPostDetails(PostListActivity.this);
+        }
+    }
+
 
 }
