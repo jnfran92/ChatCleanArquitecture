@@ -11,6 +11,8 @@ import com.juanchango.presentation.mapper.PostViewModelFromModelMapper;
 import com.juanchango.presentation.view.PostDetailsView;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
+import javax.inject.Inject;
+
 /**
  * {@link Presenter} that controls communication between Domain Layer and View Layer. View must shown
  * the {@link PostViewModel} object.
@@ -22,6 +24,7 @@ public class PostDetailsPresenter implements Presenter{
     private final GetPostDetails getPostDetailsUseCase;
     private final PostViewModelFromModelMapper postViewModelFromModelMapper;
 
+    @Inject
     public PostDetailsPresenter(GetPostDetails getPostDetails, PostViewModelFromModelMapper postViewModelFromModelMapper) {
         this.getPostDetailsUseCase = getPostDetails;
         this.postViewModelFromModelMapper = postViewModelFromModelMapper;

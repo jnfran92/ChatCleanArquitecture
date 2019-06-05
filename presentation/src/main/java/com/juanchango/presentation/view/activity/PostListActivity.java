@@ -7,7 +7,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.juanchango.presentation.R;
@@ -16,6 +15,7 @@ import com.juanchango.presentation.di.component.DaggerApplicationComponent;
 import com.juanchango.presentation.di.module.ApplicationModule;
 import com.juanchango.presentation.presenter.PostListPresenter;
 import com.juanchango.presentation.view.PostListView;
+import com.juanchango.presentation.view.adapter.PostAdapterLayoutManager;
 import com.juanchango.presentation.view.adapter.PostsAdapter;
 import com.juanchango.presentation.viewmodel.PostViewModel;
 
@@ -40,48 +40,39 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
     @BindView(R.id.pb_postActivity_loading)
     ProgressBar progressBarLoading;
 
+//    Context context;
+    @Inject PostsAdapter postsAdapter;
+
+    @Inject PostListPresenter postListPresenter;
+
+    @Inject PostAdapterLayoutManager postAdapterLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_list);
         ButterKnife.bind(this);
-
         Timber.i("onCreate");
 
-        // Data
-        context = getApplicationContext();
-
-        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
-
-        applicationComponent.inject(this);
-
-
-//        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
-//                .applicationModule(new ApplicationModule(this)).build();
-//
-//        postListPresenter = applicationComponent.postListPresenter();
-
-        postListPresenter.setView(this);
-
-        // RecyclerView
-        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        recyclerViewPosts.setLayoutManager(linearLayoutManager);
-
-        // Adapter
-//        postsAdapter = new PostsAdapter(context);
-        recyclerViewPosts.setAdapter(postsAdapter);
+        initInjection();
+        startViews();
     }
 
-//    public void injectPresenter(PostListPresenter postListPresenter, PostsAdapter postsAdapter){
-//        this.postListPresenter = postListPresenter;
-//        this.postsAdapter = postsAdapter;
-//    }
+    private void initInjection(){
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().
+                applicationModule(new ApplicationModule(this)).build();
+        applicationComponent.inject(this);
+    }
 
-    Context context;
-    @Inject PostsAdapter postsAdapter;
-
-    @Inject PostListPresenter postListPresenter;
+    private void startViews(){
+        // Presenter
+        postListPresenter.setView(this);
+        // RecyclerView
+        recyclerViewPosts.setLayoutManager(postAdapterLayoutManager);
+        // Adapter
+        recyclerViewPosts.setAdapter(postsAdapter);
+    }
 
     @Override
     protected void onResume() {
@@ -127,14 +118,13 @@ public class PostListActivity extends AppCompatActivity  implements PostListView
     @Override
     public void showError(String message) {
         Timber.d("showError(): ");
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public Context context() {
-        return context;
+        return getApplicationContext();
     }
-
 
     /*
     Progress Bar methods

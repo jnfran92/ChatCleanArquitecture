@@ -1,6 +1,9 @@
 package com.juanchango.presentation.di.module;
 
 import android.content.Context;
+import android.widget.LinearLayout;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.juanchango.data.executor.JobExecutor;
 import com.juanchango.data.repository.PostDataRepository;
@@ -12,6 +15,7 @@ import com.juanchango.domain.repository.PostRepository;
 import com.juanchango.presentation.UIThread;
 import com.juanchango.presentation.presenter.PostListPresenter;
 import com.juanchango.presentation.presenter.Presenter;
+import com.juanchango.presentation.view.adapter.PostAdapterLayoutManager;
 
 import javax.inject.Singleton;
 
@@ -61,9 +65,14 @@ public class ApplicationModule {
         return new CompositeDisposable();
     }
 
-    @Provides
-    Presenter presenter(PostListPresenter postListPresenter){
-        return postListPresenter;
-    }
+//    @Provides
+//    Presenter presenter(PostListPresenter postListPresenter){
+//        return postListPresenter;
+//    }
+
+//    @Provides
+//    PostAdapterLayoutManager postAdapterLayoutManager(Context context){
+//        return new PostAdapterLayoutManager(context);
+//    }
 
 }
