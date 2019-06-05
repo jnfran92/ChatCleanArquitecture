@@ -36,9 +36,9 @@ public class Navigator {
      *
      * @param context A Context needed to open the destiny activity.
      */
-    public void navigateToPostDetails(Context context){
+    public void navigateToPostDetails(Context context, int postId){
         if(context != null){
-            Intent intent = PostDetailsActivity.getCallingIntent(context);
+            Intent intent = PostDetailsActivity.getCallingIntent(context, postId);
             context.startActivity(intent);
         }
     }

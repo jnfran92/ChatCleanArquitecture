@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".view.activity.PostDetailsActivity">
 
+    <ProgressBar
+        android:id="@+id/pb_postDetailsActivity_loading"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        tools:visibility="gone" />
+
     <TextView
         android:id="@+id/tv_postDetailsActivity_postId"
         android:layout_width="match_parent"

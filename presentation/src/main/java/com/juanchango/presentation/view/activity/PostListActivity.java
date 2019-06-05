@@ -168,7 +168,8 @@ public class PostListActivity extends BaseActivity  implements PostListView {
         @Override
         public void onClickItem(PostViewModel postViewModel) {
             Timber.i("onClickItem(): Post Id %d", postViewModel.getPostId());
-            PostListActivity.this.navigator.navigateToPostDetails(PostListActivity.this);
+            PostListActivity.this.navigator.navigateToPostDetails(PostListActivity.this,
+                    postViewModel.getPostId());
         }
     }
 
