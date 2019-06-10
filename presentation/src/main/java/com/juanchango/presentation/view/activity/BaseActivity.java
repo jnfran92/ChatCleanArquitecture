@@ -6,8 +6,12 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.juanchango.presentation.PlayingCleanApplication;
+import com.juanchango.presentation.R;
 import com.juanchango.presentation.di.component.ApplicationComponent;
 import com.juanchango.presentation.di.module.ActivityModule;
 import com.juanchango.presentation.navigation.Navigator;
@@ -31,6 +35,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         Timber.i("onCreate(): ");
     }
 
+    protected void addFragment(int containerId, Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(containerId, fragment);
+        fragmentTransaction.commit();
+    }
 
     protected ApplicationComponent getApplicationComponent(){
         return ((PlayingCleanApplication) getApplication()).getApplicationComponent();

@@ -30,11 +30,9 @@ public class GetPostDetails extends UseCase<PostModel, GetPostDetails.Params>{
 
     public static final class Params {
         private final int postId;
-
         private Params(int postId) {
             this.postId = postId;
         }
-
         public static Params forPost(int postId){
             return new Params(postId);
         }

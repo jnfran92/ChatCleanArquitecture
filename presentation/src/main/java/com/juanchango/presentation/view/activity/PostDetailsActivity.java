@@ -4,33 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.juanchango.presentation.R;
-import com.juanchango.presentation.di.component.ApplicationComponent;
 import com.juanchango.presentation.di.component.DaggerPostComponent;
 import com.juanchango.presentation.di.component.PostComponent;
 import com.juanchango.presentation.navigation.Navigator;
 import com.juanchango.presentation.view.fragment.PostDetailsFragment;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class PostDetailsActivity extends BaseActivity {
 
-    public static final String INTENT_EXTRA_POST_ID = PostDetailsActivity.class.getName() + "_post_id";
-
-    int postId;
-
-//    Fragment
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-
-    // PostComponent
-    private PostComponent postComponent;
+    private static final String INTENT_EXTRA_POST_ID = PostDetailsActivity.class.getName() + "_post_id";
 
     /**
      * Creates and intent used for {@link Navigator}
@@ -44,14 +29,41 @@ public class PostDetailsActivity extends BaseActivity {
         return intent;
     }
 
+    private int postId;
+    private PostComponent postComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_details);
         ButterKnife.bind(this);
 
-        postId = getIntent().getIntExtra(INTENT_EXTRA_POST_ID, 0);
+        this.initActivity(savedInstanceState);
         this.initComponent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Timber.i("onResume");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if(outState != null){
+            outState.putInt(INTENT_EXTRA_POST_ID, this.postId);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    private void initActivity(Bundle savedInstanceState){
+        if (savedInstanceState == null){
+            this.postId = getIntent().getIntExtra(INTENT_EXTRA_POST_ID, -1);
+            this.addFragment(R.id.fy_PostDetailsActivity_frameContainer,
+                    PostDetailsFragment.forPost(this.postId));
+        }else {
+            this.postId = savedInstanceState.getInt(INTENT_EXTRA_POST_ID);
+        }
     }
 
     private void initComponent(){
@@ -60,29 +72,6 @@ public class PostDetailsActivity extends BaseActivity {
                 .applicationComponent(this.getApplicationComponent())
                 .activityModule(this.getActivityModule())
                 .build();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Timber.i("onResume");
-        initFragment();
-    }
-
-    private void initFragment() {
-
-        Bundle bundle = new Bundle();
-        bundle.putInt(INTENT_EXTRA_POST_ID, postId);
-
-        Fragment fragmentPostDetails = new PostDetailsFragment();
-        fragmentPostDetails.setArguments(bundle);
-
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.add(R.id.fy_PostDetailsActivity_frameContainer, fragmentPostDetails);
-        fragmentTransaction.commit();
-
     }
 
     public PostComponent getPostComponent(){

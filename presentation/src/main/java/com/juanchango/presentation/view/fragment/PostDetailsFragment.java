@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.juanchango.presentation.R;
 import com.juanchango.presentation.presenter.PostDetailsPresenter;
@@ -27,6 +28,8 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class PostDetailsFragment extends BaseFragment implements PostDetailsView {
+
+    private static final String PARAM_POST_ID = PostDetailsFragment.class.getName() + "_post_id";
 
     @BindView(R.id.tv_postDetailsFragment_postId)
     TextView textViewPostId;
@@ -46,6 +49,15 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
 
     public PostDetailsFragment() {
     }
+
+    public static Fragment forPost(int postId){
+        final Bundle bundle = new Bundle();
+        bundle.putInt(PARAM_POST_ID, postId);
+        final Fragment fragmentPostDetails = new PostDetailsFragment();
+        fragmentPostDetails.setArguments(bundle);
+        return fragmentPostDetails;
+    }
+
 
     private PostDetailsActivity activity;
 
@@ -77,7 +89,7 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     }
 
     private void startViews() {
-        final int postId = Objects.requireNonNull(getArguments()).getInt(PostDetailsActivity.INTENT_EXTRA_POST_ID, 0);
+        final int postId = Objects.requireNonNull(getArguments()).getInt(PARAM_POST_ID, -1);
         postDetailsPresenter.setView(this);
         postDetailsPresenter.initialize(postId);
     }
