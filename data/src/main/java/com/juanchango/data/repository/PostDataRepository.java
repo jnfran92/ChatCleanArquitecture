@@ -33,13 +33,13 @@ public class PostDataRepository implements PostRepository {
 
     @Override
     public Observable<List<PostModel>> posts() {
-        final PostDataSource postDataStore = this.postDataSourceFactory.createCloudDataStore();
-        return postDataStore.postEntityList().map(this.postFromEntityMapper::transform);
+        final PostDataSource postDataSource = this.postDataSourceFactory.createCloudDataSource();
+        return postDataSource.postEntityList().map(this.postFromEntityMapper::transform);
     }
 
     @Override
     public Observable<PostModel> post(int postId) {
-        final PostDataSource postDataStore = this.postDataSourceFactory.createCloudDataStore();
-        return postDataStore.postEntityDetails(postId).map(this.postFromEntityMapper::transform);
+        final PostDataSource postDataSource = this.postDataSourceFactory.createDiskDataSource(postId);
+        return postDataSource.postEntityDetails(postId).map(this.postFromEntityMapper::transform);
     }
 }

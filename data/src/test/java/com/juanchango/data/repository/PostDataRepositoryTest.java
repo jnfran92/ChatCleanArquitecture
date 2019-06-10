@@ -39,8 +39,8 @@ public class PostDataRepositoryTest {
 //                mockPostDataStoreFactory,
 //                mockPostEntityDataMapper);
 //
-//        given(mockPostDataStoreFactory.createDiskDataStore()).willReturn(mockPostDataStore);
-//        given(mockPostDataStoreFactory.createCloudDataStore()).willReturn(mockPostDataStore);
+//        given(mockPostDataStoreFactory.createDiskDataSource()).willReturn(mockPostDataStore);
+//        given(mockPostDataStoreFactory.createCloudDataSource()).willReturn(mockPostDataStore);
     }
 
 
@@ -54,7 +54,7 @@ public class PostDataRepositoryTest {
 
         postDataRepository.posts();
 
-        verify(mockPostDataStoreFactory).createCloudDataStore();
+        verify(mockPostDataStoreFactory).createCloudDataSource();
         verify(mockPostDataStore).postEntityList();
 
     }

@@ -28,20 +28,20 @@ public class PostDataSourceFactory {
         this.postCache = postCache;
     }
 
-    public PostDataSource createDiskDataStore(int postId){
-        PostDataSource postDataStore;
+    public PostDataSource createDiskDataSource(int postId){
+        PostDataSource postDataSource;
 
         if(!this.postCache.isExpired() && this.postCache.isCached(postId)){
-               postDataStore = new DiskPostDataSource(postCache);
+               postDataSource = new DiskPostDataSource(postCache);
         } else{
-            postDataStore = createCloudDataStore();
+            postDataSource = createCloudDataSource();
         }
-        return postDataStore;
+        return postDataSource;
     }
 
-    public PostDataSource createCloudDataStore(){
-        final PostEntityFromJsonMapper postEntityJsonMapper = new PostEntityFromJsonMapper();
-        final RestApi restApi = new RestApiImpl(context, postEntityJsonMapper);
+    public PostDataSource createCloudDataSource(){
+        final PostEntityFromJsonMapper postEntityFromJsonMapper = new PostEntityFromJsonMapper();
+        final RestApi restApi = new RestApiImpl(context, postEntityFromJsonMapper);
 
         return new CloudPostDataSource(restApi, postCache);
     }

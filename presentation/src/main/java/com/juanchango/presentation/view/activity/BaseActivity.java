@@ -20,7 +20,7 @@ import timber.log.Timber;
 public abstract class BaseActivity extends Activity {
 
     @Inject
-    Navigator navigator;
+    protected Navigator navigator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
