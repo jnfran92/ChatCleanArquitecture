@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.juanchango.presentation.R;
+import com.juanchango.presentation.di.component.PostComponent;
 import com.juanchango.presentation.presenter.PostDetailsPresenter;
 import com.juanchango.presentation.view.PostDetailsView;
 import com.juanchango.presentation.view.activity.PostDetailsActivity;
@@ -58,9 +59,6 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
         return fragmentPostDetails;
     }
 
-
-    private PostDetailsActivity activity;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,14 +76,13 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        activity = (PostDetailsActivity) getActivity();
         this.initInjection();
         this.startViews();
     }
 
     // Injection
     private void initInjection(){
-        activity.getPostComponent().inject(this);
+        this.getComponent(PostComponent.class).inject(this);
     }
 
     private void startViews() {
@@ -130,7 +127,7 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     @Override
     public void showError(String message) {
         Timber.i("showError(): ");
-        showToastMessage(message);
+        this.showToastMessage(message);
     }
 
     @Override
@@ -146,11 +143,6 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
 
     private void hideProgressBar(){
         progressBarLoading.setVisibility(View.INVISIBLE);
-    }
-
-    // Toast
-    private void showToastMessage(String message){
-        Toast.makeText(this.activity, message, Toast.LENGTH_SHORT).show();
     }
 
 }

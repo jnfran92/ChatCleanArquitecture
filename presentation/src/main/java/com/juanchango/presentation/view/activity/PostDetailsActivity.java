@@ -13,7 +13,7 @@ import com.juanchango.presentation.view.fragment.PostDetailsFragment;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class PostDetailsActivity extends BaseActivity {
+public class PostDetailsActivity extends BaseActivity implements HasComponent<PostComponent>{
 
     private static final String INTENT_EXTRA_POST_ID = PostDetailsActivity.class.getName() + "_post_id";
 
@@ -74,8 +74,11 @@ public class PostDetailsActivity extends BaseActivity {
                 .build();
     }
 
-    public PostComponent getPostComponent(){
+    /*
+    Contract for DI.
+     */
+    @Override
+    public PostComponent getComponent() {
         return postComponent;
     }
-
 }
