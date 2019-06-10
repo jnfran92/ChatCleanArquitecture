@@ -27,14 +27,14 @@ public class RestApiImpl implements RestApi {
     private final Context context;
     private final PostEntityFromJsonMapper postEntityJsonMapper;
 
-    public RestApiImpl(Context context, PostEntityFromJsonMapper postEntityJsonMapper) {
+    public RestApiImpl(Context context, PostEntityFromJsonMapper postEntityFromJsonMapper) {
 
-        if(context ==null || postEntityJsonMapper == null){
+        if(context ==null || postEntityFromJsonMapper == null){
             throw new IllegalArgumentException("Constructor's arguments cannot be null");
         }
 
         this.context = context.getApplicationContext();
-        this.postEntityJsonMapper = postEntityJsonMapper;
+        this.postEntityJsonMapper = postEntityFromJsonMapper;
     }
 
     /**

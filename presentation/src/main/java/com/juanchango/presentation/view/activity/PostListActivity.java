@@ -160,7 +160,7 @@ public class PostListActivity extends BaseActivity  implements PostListView {
         progressBarLoading.setIndeterminate(true);
     }
     private void hideProgressBar(){
-        progressBarLoading.setVisibility(View.GONE);
+        progressBarLoading.setVisibility(View.INVISIBLE);
     }
 
     // Listener Recycler View Class

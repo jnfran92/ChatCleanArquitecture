@@ -14,6 +14,4 @@ public interface ActivityComponent {
 
     // exposed to sub-graphs
     Activity activity();
-
-    void inject(PostListActivity postListActivity);
 }

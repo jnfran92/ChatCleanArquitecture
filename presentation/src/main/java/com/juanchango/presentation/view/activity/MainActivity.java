@@ -1,10 +1,7 @@
 package com.juanchango.presentation.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.juanchango.presentation.R;
 

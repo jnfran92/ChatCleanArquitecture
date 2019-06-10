@@ -1,9 +1,11 @@
 package com.juanchango.presentation.view.activity;
 
 import android.app.Activity;
+
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.juanchango.presentation.PlayingCleanApplication;
 import com.juanchango.presentation.di.component.ApplicationComponent;
@@ -17,10 +19,10 @@ import timber.log.Timber;
 /**
  * Base {@link Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Inject
-    protected Navigator navigator;
+    Navigator navigator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,5 +39,4 @@ public abstract class BaseActivity extends Activity {
     protected ActivityModule getActivityModule(){
         return new ActivityModule(this);
     }
-
 }

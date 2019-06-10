@@ -3,43 +3,34 @@ package com.juanchango.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.juanchango.presentation.R;
+import com.juanchango.presentation.di.component.ApplicationComponent;
 import com.juanchango.presentation.di.component.DaggerPostComponent;
 import com.juanchango.presentation.di.component.PostComponent;
 import com.juanchango.presentation.navigation.Navigator;
-import com.juanchango.presentation.presenter.PostDetailsPresenter;
-import com.juanchango.presentation.view.PostDetailsView;
-import com.juanchango.presentation.viewmodel.PostViewModel;
-
-import javax.inject.Inject;
+import com.juanchango.presentation.view.fragment.PostDetailsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class PostDetailsActivity extends BaseActivity implements PostDetailsView {
+public class PostDetailsActivity extends BaseActivity {
 
-    private static final String INTENT_EXTRA_POST_ID = PostDetailsActivity.class.getName() + "_postId";
+    public static final String INTENT_EXTRA_POST_ID = PostDetailsActivity.class.getName() + "_post_id";
 
-    @BindView(R.id.tv_postDetailsActivity_postId)
-    TextView textViewPostId;
+    int postId;
 
-    @BindView(R.id.tv_postDetailsActivity_title)
-    TextView textViewTitle;
+//    Fragment
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
-    @BindView(R.id.tv_postDetailsActivity_body)
-    TextView textViewBody;
-
-    @BindView(R.id.pb_postDetailsActivity_loading)
-    ProgressBar progressBarLoading;
-
-    @Inject
-    PostDetailsPresenter postDetailsPresenter;
+    // PostComponent
+    private PostComponent postComponent;
 
     /**
      * Creates and intent used for {@link Navigator}
@@ -59,89 +50,43 @@ public class PostDetailsActivity extends BaseActivity implements PostDetailsView
         setContentView(R.layout.activity_post_details);
         ButterKnife.bind(this);
 
-        this.initInjection();
-        this.startViews();
+        postId = getIntent().getIntExtra(INTENT_EXTRA_POST_ID, 0);
+        this.initComponent();
     }
 
-
-
-    private void initInjection(){
-        PostComponent postComponent = DaggerPostComponent.builder()
+    private void initComponent(){
+        postComponent = DaggerPostComponent
+                .builder()
                 .applicationComponent(this.getApplicationComponent())
                 .activityModule(this.getActivityModule())
                 .build();
-
-        postComponent.inject(this);
-    }
-
-    private void startViews() {
-        final int postId = getIntent().getIntExtra(INTENT_EXTRA_POST_ID, 0);
-        postDetailsPresenter.setView(this);
-        postDetailsPresenter.initialize(postId);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Timber.i("onResume");
+        initFragment();
+    }
+
+    private void initFragment() {
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(INTENT_EXTRA_POST_ID, postId);
+
+        Fragment fragmentPostDetails = new PostDetailsFragment();
+        fragmentPostDetails.setArguments(bundle);
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.fy_PostDetailsActivity_frameContainer, fragmentPostDetails);
+        fragmentTransaction.commit();
 
     }
 
-    //PostDetailsView implementation
-    @Override
-    public void renderPost(PostViewModel postViewModel) {
-        Timber.i("renderPost(): ");
-        textViewPostId.setText(String.valueOf(postViewModel.getPostId()));
-        textViewTitle.setText(postViewModel.getTitle());
-        textViewBody.setText(postViewModel.getBody());
+    public PostComponent getPostComponent(){
+        return postComponent;
     }
 
-    @Override
-    public void showLoading() {
-        Timber.i("showLoading(): ");
-        showProgressBar();
-
-    }
-
-    @Override
-    public void hideLoading() {
-        Timber.i("hideLoading(): ");
-        hideProgressBar();
-    }
-
-    @Override
-    public void showRetry() {
-        Timber.i("showRetry(): ");
-    }
-
-    @Override
-    public void hideRetry() {
-        Timber.i("hideRetry(): ");
-    }
-
-    @Override
-    public void showError(String message) {
-        Timber.i("showError(): ");
-        showToastMessage(message);
-    }
-
-    @Override
-    public Context context() {
-        return getApplication();
-    }
-
-    // Progress Bar
-    private void showProgressBar(){
-        progressBarLoading.setVisibility(View.VISIBLE);
-        progressBarLoading.setIndeterminate(true);
-    }
-
-    private void hideProgressBar(){
-        progressBarLoading.setVisibility(View.GONE);
-    }
-
-    // Toast
-    private void showToastMessage(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
 }
